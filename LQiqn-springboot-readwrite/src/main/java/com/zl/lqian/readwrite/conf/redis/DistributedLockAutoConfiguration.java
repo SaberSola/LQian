@@ -6,11 +6,12 @@ import com.zl.lqian.readwrite.lock.RedisDistributedLock;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.data.redis.core.RedisTemplate;
 
 
 @Configuration
-@AutoConfigureAfter(RedisCacheConfig.class)
+@Order(4)
 public class DistributedLockAutoConfiguration {
 
 

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
  *
  * 配置文件可以从这里获取
  */
-/*@Component
-@ConfigurationProperties(prefix = "com.zl")*/
+@Component
+//@ConfigurationProperties(prefix = "com.zl")*/
 public class ConfigProperties {
 }

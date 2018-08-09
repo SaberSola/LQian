@@ -27,16 +27,12 @@ public class RateLimiterClient implements DistributedRateLimit{
 
     private Logger logger = LoggerFactory.getLogger(RateLimiterClient.class);
 
+    @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
+    @Autowired
     private RedisScript<Long> rateLimiterLua;
 
-    @Autowired
-    public RateLimiterClient(StringRedisTemplate stringRedisTemplate, RedisScript<Long> rateLimiterLua ){
-
-        this.stringRedisTemplate = stringRedisTemplate;
-        this.rateLimiterLua = rateLimiterLua;
-    }
 
     /**
      * TODO 需要写个初始化lua 脚本
@@ -47,6 +43,8 @@ public class RateLimiterClient implements DistributedRateLimit{
 
     @Override
     public void init(String key, String context, Integer maxPermits,Integer rate) {
+
+        System.out.println("初始化redis");
         stringRedisTemplate.execute(rateLimiterLua,
                 ImmutableList.of(getKey(key)),
                         RateLimterConstants.RATE_LIMITER_INIT_METHOD, maxPermits + "", rate + "", context);
