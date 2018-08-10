@@ -23,7 +23,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.netflix.eureka.server.EnableEurekaServer;
 
 /**
- * @author xiaoyu
+ * @author zl
  */
 @EnableEurekaServer
 @SpringBootApplication

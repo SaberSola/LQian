@@ -1,6 +1,3 @@
---- 判断source_str 中是否contains pattern_str
---- @param source_str
---- @param patter_str
 local function contains(source_str, sub_str)
     local start_pos, end_pos = string.find(source_str, sub_str);
     if start_pos == nil then
@@ -58,7 +55,6 @@ local function acquire(key, permits, curr_mill_second, context)
     else
         redis.pcall("HSET", key, "last_mill_second", curr_mill_second)
     end
-
 
     local result = -1
     if (local_curr_permits - permits >= 0) then

@@ -1,6 +1,7 @@
 package com.zl.lqian.readwrite.Service;
 
 
+import com.zl.lqian.readwrite.conf.annotation.Locked;
 import com.zl.lqian.readwrite.entity.Order;
 import com.zl.lqian.readwrite.lock.DistributedLock;
 import com.zl.lqian.readwrite.mapper.OrderMapper;
@@ -22,11 +23,12 @@ public class OrderService {
 
 
     @Transactional(rollbackFor = Exception.class)
-    //@Locked("#count") 注解的方式加锁
+    @Locked("#count")/* 注解的方式加锁*/
     public String orderPay(Integer count, BigDecimal amount) throws Exception{
         final Order order = buildOrder(count, amount);
         String key ="zhanglei";
-        try {
+        final int rows = orderMapper.save(order);
+       /* try {
             //加锁
             boolean lock = distributedLock.lock(key, 100000, 5, 100);
             if (lock) {
@@ -37,7 +39,7 @@ public class OrderService {
         }finally {
             //这里要释放锁
             distributedLock.releaseLock(key);
-        }
+        }*/
 
         //异常回滚测试
      /*   if (1==1){
