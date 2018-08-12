@@ -1,6 +1,6 @@
 server:
   port: 8088
-  connection-timeout: 1000
+  connection-timeout: 1000ms
 eureka:
   client:
     serviceUrl:
@@ -14,7 +14,7 @@ spring:
       driver-class-name: com.mysql.jdbc.Driver
       druid:
           master:
-             url: jdbc:mysql://**********:3306/tcc_order?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&rewriteBatchedStatements=true
+             url: jdbc:mysql://************.172:3306/tcc_order?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&rewriteBatchedStatements=true
              username: admin
              password: admin
              validation-query: SELECT 1
@@ -31,7 +31,7 @@ spring:
                    enabled: false
              use-global-data-source-stat: true
           slave:
-             url: jdbc:mysql://**********83306/tcc_account?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&rewriteBatchedStatements=true
+             url: jdbc:mysql://*****************:3306/tcc_account?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&rewriteBatchedStatements=true
              username: admin
              password: admin
              validation-query: SELECT 1
@@ -49,17 +49,17 @@ spring:
              use-global-data-source-stat: true
  # Redis数据库索引（默认为0）
   redis:
-      database: 0
-      host: ********
-      port: 6379
-      password:
-      timeout: 36000
-      jedis:
-        pool:
-          max-active: 50
-          max-wait: 100000
-          max-idle: 8
-          min-idle: 0
+    database: 0
+    host: ************
+    port: 6379
+    timeout: 3000ms
+    jedis:
+      pool:
+        max-idle: 500
+        min-idle: 50
+        max-active: 2000
+        max-wait: 1000ms
+
 logging:
   config:
           classpath: log4j2.xml

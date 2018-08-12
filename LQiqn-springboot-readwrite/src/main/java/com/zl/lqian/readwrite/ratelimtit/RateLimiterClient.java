@@ -4,6 +4,7 @@ package com.zl.lqian.readwrite.ratelimtit;
 import com.google.common.collect.ImmutableList;
 import com.zl.lqian.readwrite.common.constants.RateLimterConstants;
 import com.zl.lqian.readwrite.common.type.Token;
+import com.zl.lqian.readwrite.conf.redis.FastJsonJsonRedisSerializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,8 @@ import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.RedisScript;
+import org.springframework.data.redis.serializer.RedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Service;
 
 /**
@@ -45,9 +48,9 @@ public class RateLimiterClient implements DistributedRateLimit{
     public void init(String key, String context, Integer maxPermits,Integer rate) {
 
         System.out.println("初始化redis");
-        stringRedisTemplate.execute(rateLimiterLua,
-                ImmutableList.of(getKey(key)),
-                        RateLimterConstants.RATE_LIMITER_INIT_METHOD, maxPermits + "", rate + "", context);
+        RedisSerializer stringRedisSerializer = new StringRedisSerializer();//Long类型不可以会出现异常信息;
+        stringRedisTemplate.execute(rateLimiterLua,stringRedisSerializer,new FastJsonJsonRedisSerializer<>(), ImmutableList.of(getKey(key)),
+                RateLimterConstants.RATE_LIMITER_INIT_METHOD, maxPermits + "", rate + "", context);
     }
 
 
@@ -88,7 +91,8 @@ public class RateLimiterClient implements DistributedRateLimit{
                     return connection.time();
                 }
             });
-            Long acquire = stringRedisTemplate.execute(rateLimiterLua, ImmutableList.of(getKey(key)),
+            RedisSerializer stringRedisSerializer = new StringRedisSerializer();
+            Long acquire = stringRedisTemplate.execute(rateLimiterLua,stringRedisSerializer,null,ImmutableList.of(getKey(key)),
                     RateLimterConstants.RATE_LIMITER_ACQUIRE_METHOD, permits.toString(), currMillSecond.toString(), context);
             if (acquire == 1) {
                 token = Token.PASS;
@@ -116,5 +120,11 @@ public class RateLimiterClient implements DistributedRateLimit{
     private String getKey(String key) {
         return RateLimterConstants.RATE_LIMITER_KEY_PREFIX + key;
     }
+  public static void main(String[] args){
 
+        RateLimiterClient rateLimiterClient = new RateLimiterClient();
+
+        System.out.println(rateLimiterClient.getKey("qian"));
+
+  }
 }

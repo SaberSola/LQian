@@ -7,6 +7,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.web.servlet.ServletComponentScan;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
@@ -14,6 +15,7 @@ import org.springframework.context.annotation.Configuration;
 	exclude = {DataSourceAutoConfiguration.class })
 @MapperScan("com.zl.lqian.readwrite.mapper")
 @ServletComponentScan
+@EnableEurekaClient
 public class App {
 
 	private static final Logger logger = LogManager.getLogger(App.class);

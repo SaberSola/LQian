@@ -1,47 +1,29 @@
 package com.zl.lqian.readwrite.conf.redis;
 
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
-import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.JedisPoolConfig;
+import org.springframework.stereotype.Component;
 
-@Configuration
-@ConfigurationProperties(prefix = "spring.redis")
-@Order(2)
+@Component
+@ConfigurationProperties
 public class JedisConfig {
-
     @Value("${spring.redis.host}")
-    private  String host;
-    @Value("${spring.redis.password}")
-    private  String password;
+    public String host;
     @Value("${spring.redis.port}")
-    private  int port;
-    @Value("${spring.redis.timeout}")
-    private  int timeout;
+    public int port;
+    @Value("${spring.redis.database}")
+    public int database;
     @Value("${spring.redis.jedis.pool.max-idle}")
-    private int maxIdle;
+    public int maxIdle;
+    @Value("${spring.redis.jedis.pool.min-idle}")
+    public int minIdle;
+    @Value("${spring.redis.jedis.pool.max-active}")
+    public int maxActive;
     @Value("${spring.redis.jedis.pool.max-wait}")
-    private long maxWaitMillis;
+    public String maxWait;
+    @Value("${spring.redis.timeout}")
+    public String timeout;
 
-
-    @Bean
-    public JedisConnectionFactory jedisConnectionFactory() {
-        JedisPoolConfig poolConfig = new JedisPoolConfig();
-        poolConfig.setMaxTotal(10000);
-        poolConfig.setMinIdle(1000);
-        poolConfig.setMaxIdle(-1);
-        poolConfig.setMaxWaitMillis(500);
-        poolConfig.setTestOnBorrow(true);
-        poolConfig.setTestOnReturn(true);
-        JedisConnectionFactory ob = new JedisConnectionFactory(poolConfig);
-        ob.setHostName(host);
-        ob.setPort(port);
-        ob.setUsePool(true);
-        return ob;
-    }
 }
+
