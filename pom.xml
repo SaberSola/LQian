@@ -20,6 +20,8 @@
         <module>LQian-springboot-starter</module>
         <module>LQian-springcloud-eureka</module>
         <module>LQiqn-springboot-readwrite</module>
+        <module>LQian-netty-learn</module>
+        <module>LQian-springcloud-RabbitMq</module>
     </modules>
     <!-- <scm>
          <url>https://github.com/yu199195/hmily.git</url>
