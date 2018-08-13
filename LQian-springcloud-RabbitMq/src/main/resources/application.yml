@@ -1,0 +1,44 @@
+server:
+  port: 8089
+  connection-timeout: 10000ms
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+spring:
+  rabbitmq:
+    host: 45.32.254.172
+    port: 5672
+    username: mqadmin
+    password: mqadmin
+    connection-timeout: 30000ms
+    template:
+      receive-timeout: 3000ms
+    listener:
+      simple:
+        concurrency: 5
+        max-concurrency: 20
+        acknowledge-mode: manual
+        retry:
+          enabled: true
+    virtual-host: /
+    cache:
+      channel:
+        size: 100
+        checkout-timeout: 10000ms
+  redis:
+    database: 0
+    host:
+    port: 6379
+    timeout: 3000ms
+    jedis:
+      pool:
+        max-idle: 500
+        min-idle: 50
+        max-active: 2000
+        max-wait: 1000ms
+logging:
+  config:
+    classpath: log4j2.xml

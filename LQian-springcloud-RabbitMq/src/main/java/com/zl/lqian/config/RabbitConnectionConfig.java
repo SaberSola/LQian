@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.amqp.RabbitProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.util.StringUtils;
 
 import java.util.Arrays;
@@ -24,9 +25,8 @@ import java.util.List;
  */
 
 @Configuration
-@ComponentScan
+@Order(1)
 public class RabbitConnectionConfig {
-
 
     private Logger logger = LoggerFactory.getLogger(RabbitConnectionConfig.class);
 
@@ -66,7 +66,8 @@ public class RabbitConnectionConfig {
             factory.setTrustStorePassphrase(ssl.getTrustStorePassword());
         }
         if (rabbitProperties.getConnectionTimeout() != null) {
-            factory.setConnectionTimeout(rabbitProperties.getConnectionTimeout());
+            System.out.println("设置链接的超时时间"+Integer.parseInt(String.valueOf(rabbitProperties.getConnectionTimeout().getSeconds())));
+            factory.setConnectionTimeout(Integer.parseInt(String.valueOf(rabbitProperties.getConnectionTimeout().getSeconds())));
         }
 
         factory.afterPropertiesSet();
@@ -86,7 +87,8 @@ public class RabbitConnectionConfig {
             connectionFactory.setConnectionCacheSize(rabbitProperties.getCache().getConnection().getSize());
         }
         if (rabbitProperties.getCache().getChannel().getCheckoutTimeout() != null) {
-            connectionFactory.setChannelCheckoutTimeout(rabbitProperties.getCache().getChannel().getCheckoutTimeout());
+
+            connectionFactory.setChannelCheckoutTimeout(Integer.valueOf(String.valueOf(rabbitProperties.getCache().getChannel().getCheckoutTimeout().getSeconds())));
         }
         return connectionFactory;
     }
