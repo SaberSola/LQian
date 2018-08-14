@@ -16,7 +16,6 @@ import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -50,7 +49,7 @@ public class RabbitTemplateConfig {
         rabbitTemplate.setConfirmCallback((correlationData,ack,cause)->{
             LOGGER.debug("回调为correlationData:{},ack:{},cause;{}",correlationData,ack,cause);
             String cacheKey = correlationData.getId();
-            RabbitMetaMessage metaMessage = (RabbitMetaMessage) redisTemplate.opsForHash().get(MQConstants.MQ_PRODUCER_RETRY_KEY, cacheKey);
+            RabbitMetaMessage  metaMessage =  (RabbitMetaMessage)redisTemplate.opsForHash().get(MQConstants.MQ_PRODUCER_RETRY_KEY, cacheKey);
             //如果消息正确投递
             if (ack) {
                 LOGGER.info("消息已正确投递到队列，correlationData:{}", correlationData);

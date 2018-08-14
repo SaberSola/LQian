@@ -1,6 +1,7 @@
 package com.zl.lqian.config.redis;
 
 
+import com.zl.lqian.utils.RabbitMetaMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
@@ -72,7 +73,7 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
         redisTemplate.setKeySerializer(stringRedisSerializer);
         redisTemplate.setValueSerializer(new FastJsonJsonRedisSerializer<>());
         redisTemplate.setHashKeySerializer(stringRedisSerializer);
-        redisTemplate.setHashValueSerializer(new FastJsonJsonRedisSerializer<>());
+        redisTemplate.setHashValueSerializer(new FastJsonJsonRedisSerializer<>(RabbitMetaMessage.class));
         return redisTemplate;
     }
 
