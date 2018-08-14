@@ -30,7 +30,6 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
     @Bean
     public RedisCacheManager cacheManager(JedisConnectionFactory redisConnectionFactory) {
 
-        System.out.println(1111);
         return RedisCacheManager.create(redisConnectionFactory);
     }
 
@@ -65,16 +64,15 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
 
     }
         @Bean
-    public RedisTemplate redisTemplate(JedisConnectionFactory jedisConnectionFactory) {
-        RedisTemplate redisTemplate = new RedisTemplate();
+    public RedisTemplate<String,Object> redisTemplate(JedisConnectionFactory jedisConnectionFactory) {
+        RedisTemplate<String,Object> redisTemplate = new RedisTemplate<String,Object>();
         redisTemplate.setConnectionFactory(jedisConnectionFactory);
 
         RedisSerializer<String> stringRedisSerializer = new StringRedisSerializer();//Long类型不可以会出现异常信息;
         redisTemplate.setKeySerializer(stringRedisSerializer);
         redisTemplate.setValueSerializer(new FastJsonJsonRedisSerializer<>());
         redisTemplate.setHashKeySerializer(stringRedisSerializer);
-        redisTemplate.setHashValueSerializer(stringRedisSerializer);
-        System.out.println(222);
+        redisTemplate.setHashValueSerializer(new FastJsonJsonRedisSerializer<>());
         return redisTemplate;
     }
 
@@ -88,7 +86,6 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
         stringRedisTemplate.setValueSerializer(new FastJsonJsonRedisSerializer<>());
         stringRedisTemplate.setHashKeySerializer(stringRedisSerializer);
         stringRedisTemplate.setHashValueSerializer(stringRedisSerializer);
-        System.out.println(333);
         return stringRedisTemplate;
     }
 

@@ -23,7 +23,7 @@ public class RabbitSender {
 
 
     @Autowired
-    RedisTemplate redisTemplate;
+    RedisTemplate<String,Object> redisTemplate;
 
     @Autowired
     RabbitTemplate rabbitTemplate;

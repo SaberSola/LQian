@@ -1,15 +1,15 @@
 server:
   port: 8089
   connection-timeout: 10000ms
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
-  instance:
-    prefer-ip-address: true
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: http://localhost:8761/eureka/
+#  instance:
+#    prefer-ip-address: true
 spring:
   rabbitmq:
-    host: 45.32.254.172
+    host: **********8
     port: 5672
     username: mqadmin
     password: mqadmin
@@ -23,14 +23,13 @@ spring:
         acknowledge-mode: manual
         retry:
           enabled: true
-    virtual-host: /
     cache:
       channel:
-        size: 100
+        size: 10
         checkout-timeout: 10000ms
   redis:
     database: 0
-    host:
+    host: ***********8
     port: 6379
     timeout: 3000ms
     jedis:
