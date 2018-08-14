@@ -73,6 +73,7 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
         redisTemplate.setKeySerializer(stringRedisSerializer);
         redisTemplate.setValueSerializer(new FastJsonJsonRedisSerializer<>());
         redisTemplate.setHashKeySerializer(stringRedisSerializer);
+        //TODO 这里是为了方便本工程 采用指定的序列化 不建议指定
         redisTemplate.setHashValueSerializer(new FastJsonJsonRedisSerializer<>(RabbitMetaMessage.class));
         return redisTemplate;
     }
