@@ -50,6 +50,12 @@ public class NettyServer {
 
 
     public static void main(String[] args) throws Exception {
-        new NettyServer().bind();
+         new NettyServer().bind();
+       // System.out.println(isPowerOfTwo(4));
+    }
+
+    //判断是不是2的幂数
+    private static boolean isPowerOfTwo(int val) {
+        return (val & -val) == val;
     }
 }

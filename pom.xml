@@ -22,6 +22,7 @@
         <module>LQiqn-springboot-readwrite</module>
         <module>LQian-springcloud-RabbitMq</module>
         <module>LQian-springboot-netty</module>
+        <module>LQian-springcloud-Repetition</module>
     </modules>
     <!-- <scm>
          <url>https://github.com/yu199195/hmily.git</url>

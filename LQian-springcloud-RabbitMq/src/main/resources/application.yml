@@ -9,7 +9,7 @@ eureka:
     prefer-ip-address: true
 spring:
   rabbitmq:
-    host: **********8
+    host: 45.32.254.172
     port: 5672
     username: mqadmin
     password: mqadmin
@@ -29,7 +29,7 @@ spring:
         checkout-timeout: 10000ms
   redis:
     database: 0
-    host: ***********8
+    host: 45.32.254.172
     port: 6379
     timeout: 3000ms
     jedis:
