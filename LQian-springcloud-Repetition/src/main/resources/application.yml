@@ -10,27 +10,27 @@ eureka:
   #测试主库
 spring:
   application:
-    name: rabbitmq-service
+    name: repetition
   datasource:
-      type: com.alibaba.druid.pool.DruidDataSource
-      driver-class-name: com.mysql.jdbc.Driver
-      druid.:
-             url: jdbc:mysql://45.32.254.172:3306/tcc_order?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&rewriteBatchedStatements=true
-             username: admin
-             password: admin
-             validation-query: SELECT 1
-             initial-size: 5
-             max-active: 100
-             min-idle: 5
-             max-wait: 6000
-             remove-abandoned: true
-             remove-abandoned-timeout-millis: 1800
-             time-between-eviction-runs-millis: 60000
-             min-evictable-idle-time-millis: 25200000
-             filters: wall
-             stat-view-servlet:
-                   enabled: false
-             use-global-data-source-stat: true
+          type: com.alibaba.druid.pool.DruidDataSource
+          driverClassName: com.mysql.jdbc.Driver
+          driver-class-name: com.mysql.jdbc.Driver
+          platform: mysql
+          url: jdbc:mysql://45.32.254.172:3306/tcc_account?useUnicode=true&characterEncoding=utf-8&useSSL=false
+          username: admin
+          password: admin
+          initialSize: 5
+          minIdle: 5
+          maxActive: 20
+          maxWait: 60000
+          timeBetweenEvictionRunsMillis: 60000
+          minEvictableIdleTimeMillis: 300000
+          validationQuery: SELECT1FROMDUAL
+          testWhileIdle: true
+          testOnBorrow: false
+          testOnReturn: false
+          filters: stat,wall,log4j
+          logSlowSql: true
  # Redis数据库索引（默认为0）
   redis:
     database: 0

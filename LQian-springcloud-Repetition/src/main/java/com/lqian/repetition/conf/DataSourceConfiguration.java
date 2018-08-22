@@ -1,25 +1,31 @@
-package com.lqian.repetition.conf;
+/* package com.lqian.repetition.conf;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import com.lqian.repetition.conf.db.DbContextHolder;
+import com.lqian.repetition.conf.db.MasterSlaveRoutingDataSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.annotation.Order;
+import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @Author zl
  * 配置数据源管理器
  */
+/*
 @Configuration
 @EnableTransactionManagement
 @Order(1)
 public class DataSourceConfiguration {
-
-    /**************master库控制********************/
+   //**************master库控制********************//*
     @Value("${spring.datasource.druid.master.url}")
     private String  masterurl;
     @Value("${spring.datasource.druid.master.username}")
@@ -52,9 +58,8 @@ public class DataSourceConfiguration {
     private Boolean masteruseglobaldatasourcestat;
 
 
-
     @Bean
-    public DataSource dataSource()  throws SQLException {
+    public DataSource masterDataSource()  throws SQLException {
         DruidDataSource dataSource = new DruidDataSource();
         dataSource.setUrl(masterurl);
         dataSource.setUsername(masterusername);
@@ -74,4 +79,4 @@ public class DataSourceConfiguration {
         return dataSource;
     }
 
-}
+}*/
