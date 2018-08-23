@@ -1,10 +1,11 @@
 package com.lqian.repetition.controller;
+
+import com.alibaba.fastjson.JSONObject;
 import com.lqian.repetition.Service.AccountService;
+import com.lqian.repetition.conf.annotation.ConcurrentLimit;
 import com.lqian.repetition.entity.AccountDO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -20,10 +21,12 @@ public class AccountController {
      * @param userId
      * @return
      */
-    @RequestMapping("/findByUserId")
-    public AccountDO findByUserId(@RequestParam("userId") String userId) {
+    @RequestMapping(value = "/findByUserId",method = RequestMethod.POST)
+    @ConcurrentLimit
+    public AccountDO findByUserId(@RequestBody JSONObject jsonObject) {
 
-        AccountDO accountDO = accountService.findByUserId(userId);
+        System.out.println(jsonObject.toJSONString());
+        AccountDO accountDO = accountService.findByUserId(jsonObject.getString("userId"));
 
         return accountDO;
     }

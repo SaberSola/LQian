@@ -19,7 +19,6 @@ public class AccountService {
 
 
 
-    @ConcurrentLimit
     public AccountDO findByUserId(String userId) {
         final AccountDO accountDO = accountMapper.findByUserId(userId);
         try {
