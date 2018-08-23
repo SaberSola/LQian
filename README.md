@@ -11,3 +11,5 @@ zl：1198902364
 4:springboot2.0 基于redis+lua脚本实现分布式限流
 
 5:springboot2.0 结合rabbitmq实现普通队列，死信队列
+
+6:springboot2.0 redis 实现接口幂等性
