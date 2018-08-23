@@ -53,8 +53,6 @@ public class ConcurrentLimitAspect {
         String queryString = Arrays.toString(strings);
         String qeeryvalue = Arrays.toString(point.getArgs());
         String result = queryString+ qeeryvalue;
-       // String repeatDataValidator = repeatDataValidator(request);
-        //其实可以考虑前段传递过来一串随机数
         String redisConcurrent = KEY_PREFIX + ":" + targetClass + ":" + targetMethod + ":" + result;
         //这里开始上锁
         boolean lock = distributedLock.lock(redisConcurrent);
@@ -72,15 +70,5 @@ public class ConcurrentLimitAspect {
             boolean releaseResult = distributedLock.releaseLock(redisConcurrent);
             logger.debug("release lock : " + redisConcurrent + (releaseResult ? " success" : " failed"));
         }
-    }
-
-
-    public String repeatDataValidator(HttpServletRequest httpServletRequest) {
-        String params = JSONObject.toJSONString(httpServletRequest.getParameterMap());
-        String url = httpServletRequest.getRequestURI();
-        Map<String, String> map = new HashMap<String, String>();
-        map.put(url, params);
-        String nowUrlParams = map.toString();//
-        return nowUrlParams;
     }
 }
