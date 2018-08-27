@@ -2,7 +2,10 @@ package com.CompletableFutureDemo;
 
 import org.junit.Test;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.*;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -158,4 +161,166 @@ public class CompletableFutureLsearn {
         cf.join();
         System.out.println(result.length());
     }
+
+    /**
+     * 演示了CompletableFuture等待俩个阶段同步执行,第一个阶段执行大写转换，第二个阶段执行小写转换。
+     */
+    @Test
+    public void runAfterBothExample(){
+        String original = "Message";
+        StringBuilder result  = new StringBuilder();
+        CompletableFuture  sf  = CompletableFuture.completedFuture(original).thenApply(String::toUpperCase).
+                runAfterBoth(CompletableFuture.completedFuture(original).thenApply(String::toLowerCase),()->{
+                    result.append("done");
+                });
+
+        try {
+            Thread.sleep(1000);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        System.out.println(result.length());
+    }
+
+    /**
+     * 处理俩个过程的结果
+     */
+    @Test
+    public void thenAcceptBothExample(){
+
+        String original = "Message";
+        StringBuilder result = new StringBuilder();
+        CompletableFuture.completedFuture(original).thenApply(String::toUpperCase).
+                thenAcceptBoth(CompletableFuture.completedFuture(original).thenApply(String::toLowerCase),(s1,s2)->{
+                   result.append(s1+s2);
+                });
+        System.out.println(result.toString());
+    }
+
+    /**
+     * 如果CompletableFuture依赖两个前面阶段的结果，
+     * 它复合两个阶段的结果再返回一个结果，我们就可以使用thenCombine()函数。
+     * 整个流水线是同步的，所以getNow()会得到最终的结果，它把大写和小写字符串连接起来。
+     */
+    @Test
+    public void thenCombineExample(){
+        String original = "Message";
+        StringBuilder result = new StringBuilder();
+        CompletableFuture cf = CompletableFuture.completedFuture(original).thenApply(String::toUpperCase)
+                .thenCombine(CompletableFuture.completedFuture(original).thenApply(String::toLowerCase),(s1,s2)-> s1+s2
+                );
+       /* try {
+            Thread.sleep(1000);
+        }catch (Exception e){
+            e.printStackTrace();
+        }*/
+        System.out.println(cf.getNow(null));
+    }
+
+    /**
+     * 上一步的异步执行
+     * 最后需要使用join方法等待结构
+     */
+    @Test
+    public void thenCombineAsyncExample(){
+        String original = "Message";
+        StringBuilder result = new StringBuilder();
+        CompletableFuture cf = CompletableFuture.completedFuture(original).thenApplyAsync(s -> delayedUpperCase(s))
+                .thenCombine(CompletableFuture.completedFuture(original).thenApplyAsync(s->delayedLowerCase(s)),
+                        (s1,s2)-> s1 + s2);
+       /* try {
+            Thread.sleep(5000);
+        }catch (Exception e){
+            e.printStackTrace();
+        }*/
+        //立即返回结果
+        System.out.println(cf.getNow("abc"));
+        System.out.println(cf.join());
+    }
+
+    private static String delayedUpperCase(String s) {
+        delay();
+        return s.toUpperCase();
+    }
+    private static String delayedLowerCase(String s) {
+        delay();
+        return s.toLowerCase();
+    }
+
+    public static void delay() {
+        int delay = 1000;
+        try {
+            Thread.sleep(delay);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * 这个方法等待第一个阶段的完成(大写转换)，
+     * 它的结果传给一个指定的返回CompletableFuture函数，
+     * 它的结果就是返回的CompletableFuture的结果。
+     *
+     */
+    @Test
+    public void thenComposeExample(){
+        String original = "Message";
+        CompletableFuture sf = CompletableFuture.completedFuture(original).thenApply(s -> delayedUpperCase(s))
+                .thenCompose(upper -> CompletableFuture.completedFuture(original).thenApply(s -> delayedLowerCase(s))
+                        .thenApply(s -> upper + s));
+        System.out.println(sf.getNow(null));
+    }
+
+
+    /**
+     * 只要有一个阶段完成 就算是完成
+     */
+    @Test
+    public void anyOfExample(){
+        StringBuilder result = new StringBuilder();
+        List<String> messages = Arrays.asList("a", "b", "c");
+        List<CompletableFuture> futures = messages.stream()
+                .map(msg->CompletableFuture.completedFuture(msg).thenApply(s -> delayedUpperCase(s)))
+                .collect(Collectors.toList());
+        CompletableFuture.anyOf(futures.toArray(new CompletableFuture[futures.size()])).whenComplete((res,th)->{
+            if (th == null){
+                System.out.println((String) res);
+                result.append(res);
+            }
+        });
+    }
+    /**
+     * 这里必须要全部阶段完成
+     */
+    @Test
+    public void allOfExample(){
+        StringBuilder result = new StringBuilder();
+        List<String> messages = Arrays.asList("a", "b", "c");
+        List<CompletableFuture> futures = messages.stream()
+                .map(msg -> CompletableFuture.completedFuture(msg).thenApply(s -> delayedUpperCase(s)))
+                .collect(Collectors.toList());
+        CompletableFuture.allOf(futures.toArray(new CompletableFuture[futures.size()])).whenComplete((v, th) -> {
+            futures.forEach(cf -> System.out.println(cf.getNow(null)));
+            result.append("done");
+        });
+    }
+
+    /**
+     * 上一步的异步执行
+     */
+    @Test
+    public void allOfAsyncExample(){
+
+        StringBuilder result = new StringBuilder();
+        List<String> messages = Arrays.asList("a", "b", "c");
+        List<CompletableFuture> futures = messages.stream()
+                .map(msg -> CompletableFuture.completedFuture(msg).thenApplyAsync(s -> delayedUpperCase(s)))
+                .collect(Collectors.toList());
+        CompletableFuture.allOf(futures.toArray(new CompletableFuture[futures.size()]))
+                .whenComplete((v, th) -> {
+                    futures.forEach(cf -> System.out.println(cf.getNow(null)));
+                    result.append("done");
+                }).toCompletableFuture().join();
+    }
+
 }
