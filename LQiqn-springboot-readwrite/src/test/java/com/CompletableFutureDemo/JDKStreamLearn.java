@@ -99,6 +99,18 @@ public class JDKStreamLearn {
         persions.add(persion3);
         persions.add(persion4);
 
+        Persion persion5 = new Persion("zl","男","16");
+        Persion persion6 = new Persion("zl2","男","17");
+        Persion persion7 = new Persion("zl1","女","168");
+        Persion persion8 = new Persion("zl2","女","19");
+        Persion persion9 = new Persion("zl1","男","20");
+
+        List<Persion> persionList = new ArrayList<>();
+        persionList.add(persion5);
+        persionList.add(persion6);
+        persionList.add(persion7);
+        persionList.add(persion8);
+        persionList.add(persion9);
         //forEach 不能修改自己包含的本地变量值，也不能用 break/return 之类的关键字提前结束循环。
        //persions.stream().filter(p -> p.getSex().equals("女")).forEach(persion5 -> System.out.println(persion5.getSex()+persion5.getAge() + persion5.getName()) );
 
@@ -109,9 +121,11 @@ public class JDKStreamLearn {
         unique.forEach(book -> System.out.printf("book[id: %s, name: %s]\n", book.getName(), book.getAge()));*/
      Set<Persion> set = new HashSet<>();
      set.addAll(persions);
-     set.stream().forEach(persion5 -> {
-         System.out.printf("book[id: %s, name: %s]\n", persion5.getName(), persion5.getAge());
+     set.addAll(persionList);
+     set.stream().forEach(persionlist -> {
+         System.out.printf("persion[name %s, age: %s]\n", persionlist.getName(), persionlist.getAge());
      });
+     System.out.println(set.size());
 
     }
 
