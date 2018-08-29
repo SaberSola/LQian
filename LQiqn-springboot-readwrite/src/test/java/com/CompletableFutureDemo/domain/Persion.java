@@ -36,4 +36,15 @@ public class Persion {
         this.sex = sex;
         this.age = age;
     }
+
+    @Override
+    public boolean equals(Object arg0) {
+        Persion p = (Persion) arg0;
+        return name.equals(p.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
+    }
 }

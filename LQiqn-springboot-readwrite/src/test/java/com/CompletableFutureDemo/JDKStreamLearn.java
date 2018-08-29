@@ -3,13 +3,12 @@ package com.CompletableFutureDemo;
 import com.CompletableFutureDemo.domain.Persion;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
-
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.toCollection;
 public class JDKStreamLearn {
 
     @Test
@@ -101,7 +100,19 @@ public class JDKStreamLearn {
         persions.add(persion4);
 
         //forEach 不能修改自己包含的本地变量值，也不能用 break/return 之类的关键字提前结束循环。
-        persions.stream().filter(p -> p.getSex().equals("女")).forEach(persion5 -> System.out.println(persion5.getSex()+persion5.getAge() + persion5.getName()) );
+       //persions.stream().filter(p -> p.getSex().equals("女")).forEach(persion5 -> System.out.println(persion5.getSex()+persion5.getAge() + persion5.getName()) );
+
+     /*  //去除重复
+        List<Persion> unique = persions.stream().collect(
+                collectingAndThen(toCollection(() -> new TreeSet<>(Comparator.comparing(o -> o.getName()))),
+                        ArrayList::new));
+        unique.forEach(book -> System.out.printf("book[id: %s, name: %s]\n", book.getName(), book.getAge()));*/
+     Set<Persion> set = new HashSet<>();
+     set.addAll(persions);
+     set.stream().forEach(persion5 -> {
+         System.out.printf("book[id: %s, name: %s]\n", persion5.getName(), persion5.getAge());
+     });
+
     }
 
     /**
