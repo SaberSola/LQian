@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fjs.apollo.mapper.thor.ActionMapper">
+    <select id="findByIdList" resultType="com.fjs.apollo.entity.thor.Action">
+        SELECT
+          mbrAction.id,
+          mbrAction.action_name
+        FROM
+          saas_mbr_action mbrAction,
+          saas_mbr_system mbrSystem,
+          saas_mbr_module mbrModule
+        WHERE
+          mbrAction.system_id = mbrSystem.id AND
+          mbrAction.module_id = mbrModule.id AND
+          mbrAction.status = 1 AND
+          mbrAction.is_deleted = 0 AND
+          mbrSystem.status = 1 AND
+          mbrSystem.is_deleted = 0 AND
+          mbrModule.status = 1 AND
+          mbrModule.is_deleted = 0 AND
+          mbrAction.id IN
+        <foreach item="item" index="index" collection="idList" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+</mapper>

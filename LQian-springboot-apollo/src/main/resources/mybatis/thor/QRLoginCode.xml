@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fjs.apollo.mapper.thor.QRLoginCodeMapper">
+
+    <select id="findByCode" resultType="com.fjs.apollo.entity.thor.QRLoginCode">
+        SELECT
+          id,
+          qrcode,
+          user_id,
+          status,
+          create_time,
+          last_update_time
+        FROM
+          saas_mbr_qrlogincode
+        WHERE
+          qrcode = #{qrCode} AND
+          status = 1
+    </select>
+
+    <update id="updateStatus">
+        UPDATE
+          saas_mbr_qrlogincode
+        SET
+          status = 2,
+          last_update_time = now()
+        WHERE
+          id = #{id}
+    </update>
+</mapper>

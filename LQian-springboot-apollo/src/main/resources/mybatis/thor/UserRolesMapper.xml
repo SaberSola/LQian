@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fjs.apollo.mapper.thor.UserRolesMapper">
+    <select id="findByUserId" resultType="com.fjs.apollo.entity.thor.UserRoles">
+        SELECT
+            id,
+            user_id,
+            role_id,
+            status,
+            is_deleted
+        FROM
+          saas_mbr_user_roles userRoles
+        WHERE
+          userRoles.user_id = #{userId} AND
+          userRoles.is_deleted = 0
+    </select>
+</mapper>
