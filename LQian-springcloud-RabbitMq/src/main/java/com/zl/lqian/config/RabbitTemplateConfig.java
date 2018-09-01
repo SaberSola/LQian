@@ -24,6 +24,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
 @Configuration
+@ComponentScan
 public class RabbitTemplateConfig {
 
     private Logger LOGGER = LoggerFactory.getLogger(RabbitTemplateConfig.class);
