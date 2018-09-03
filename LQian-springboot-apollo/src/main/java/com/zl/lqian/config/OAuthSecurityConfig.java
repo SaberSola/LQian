@@ -21,6 +21,7 @@ import org.springframework.security.oauth2.provider.token.AuthorizationServerTok
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
+import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 import javax.sql.DataSource;
 import java.util.ArrayList;
@@ -44,6 +45,7 @@ public class OAuthSecurityConfig extends AuthorizationServerConfigurerAdapter {
 
     @Bean
     public TokenStore tokenStore(){
+        //TODO 这里可以选择基于JDBC 还是 JwtTokenStore
         return new JdbcTokenStore(dataSource);
     }
 
