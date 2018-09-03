@@ -2,14 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fjs.apollo.mapper.thor.ActionMapper">
-    <select id="findByIdList" resultType="com.fjs.apollo.entity.thor.Action">
+    <select id="findByIdList" resultType="com.zl.lqian.entity.Action">
         SELECT
           mbrAction.id,
           mbrAction.action_name
         FROM
-          saas_mbr_action mbrAction,
-          saas_mbr_system mbrSystem,
-          saas_mbr_module mbrModule
+          action mbrAction,
+          system mbrSystem,
+          module mbrModule
         WHERE
           mbrAction.system_id = mbrSystem.id AND
           mbrAction.module_id = mbrModule.id AND

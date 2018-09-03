@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fjs.apollo.mapper.thor.RoleAuthMapper">
-    <select id="findByRole_id" resultType="com.fjs.apollo.entity.thor.RoleAuth">
+    <select id="findByRole_id" resultType="com.zl.lqian.entity.RoleAuth">
         SELECT
             id,
             role_id,
@@ -11,7 +11,7 @@
             action_id,
             status
         FROM
-            saas_mbr_role_auth
+            role_auth
         WHERE
             role_id = #{roleId} AND
             is_deleted = 0

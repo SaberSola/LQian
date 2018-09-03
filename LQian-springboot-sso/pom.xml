@@ -9,8 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>LQian-springboot-apollo</artifactId>
-
+    <artifactId>LQian-springboot-sso</artifactId>
     <dependencies>
 
         <dependency>
@@ -200,7 +199,7 @@
     </dependencies>
 
     <build>
-        <finalName>apollo</finalName>
+        <finalName>LQian-SSO</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -212,8 +211,6 @@
             </plugin>
         </plugins>
     </build>
-
-
 
 
 </project>

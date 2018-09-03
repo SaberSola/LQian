@@ -25,6 +25,7 @@
         <module>LQian-springcloud-Repetition</module>
         <module>LQian-Design-Mode</module>
         <module>LQian-springboot-apollo</module>
+        <module>LQian-springboot-sso</module>
     </modules>
     <!-- <scm>
          <url>https://github.com/yu199195/hmily.git</url>
