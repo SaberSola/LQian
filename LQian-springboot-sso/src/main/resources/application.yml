@@ -31,14 +31,22 @@ spring:
     testOnReturn: false
     filters: stat,wall,log4j
     logSlowSql: true
+OAUTH2SERVER: http://localhost:6040
 security:
-  oauth2:
-    client:
-      client-id: agent
-      client-secret: 123456
-    resource:
-      id:
-      token-info-uri: http://localhost:6040/
+    oauth2:
+        resource:
+            id: ${eureka.instance.instanceId}
+            token-info-uri: ${OAUTH2SERVER}/oauth/check_token
+            user-info-uri: ${OAUTH2SERVER}/user
+        client:
+            user-authorization-uri: ${OAUTH2SERVER}/oauth/authorize
+            access-token-uri: ${OAUTH2SERVER}/oauth/token
+            authentication-scheme: query
+            client-authentication-scheme: form
+            client-id: user
+            grant-type: password
+            scope: app
+            use-current-uri: false
 logging:
   config:
           classpath: log4j2.xml
