@@ -30,10 +30,19 @@ public class OAuthResourceConfig extends ResourceServerConfigurerAdapter {
         return remoteTokenServices;
     }
 
+    /**
+     * 这里过滤url的路径
+     * scope 代表域，这里代指系统
+     * @param http
+     * @throws Exception
+     */
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().requestMatchers(CorsUtils::isPreFlightRequest).permitAll().antMatchers("/api/**").authenticated();
-        //TODO 这里后续判断是否含有scope
+        http.authorizeRequests().requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
+                .antMatchers("/api/**").authenticated()//允许认证过后用户访问
+                .antMatchers("/loginSystem").anonymous()//允许匿名用户,也就是完全暴漏的api 很危险
+                //只允许包含scope域的api访问，access()参数是一个el表达式 类似于oauth2.hasScope 等
+                .antMatchers("/**").access("#oauth2.hasScope('app')");
     }
 
     @Override

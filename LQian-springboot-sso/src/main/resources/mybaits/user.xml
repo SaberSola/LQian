@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.fjs.apollo.mapper.thor.UserMapper">
-
+<mapper namespace="com.zl.lqian.mapper.UserInfoMapper">
     <resultMap type="com.zl.lqian.entity.User" id="UserMap">
         <id property="id" column="id" />
         <result property="authType" column="auth_type" />
@@ -20,13 +19,4 @@
         WHERE
         user_id = #{userId}
     </select>
-
-    <update id="updateLastLoginTime">
-        update
-          `user`
-        SET
-          last_login_time = now()
-        WHERE
-          id=#{id}
-    </update>
 </mapper>

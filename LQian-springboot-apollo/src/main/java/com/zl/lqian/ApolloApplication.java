@@ -1,9 +1,12 @@
 package com.zl.lqian;
 
+import com.zl.lqian.common.SpringBeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,10 +22,11 @@ import java.util.Arrays;
 @EnableAuthorizationServer
 @EnableTransactionManagement
 @ComponentScan(basePackages = "com.zl")
-public class Application {
+public class ApolloApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        ConfigurableApplicationContext applicationContext = SpringApplication.run(ApolloApplication.class, args);
+        SpringBeanUtils.getInstance().setCfgContext(applicationContext);
     }
 
     @Autowired

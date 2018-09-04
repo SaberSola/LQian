@@ -2,7 +2,7 @@ package com.zl.lqian.service;
 
 
 import com.zl.lqian.entity.User;
-import com.zl.lqian.mapper.UserMapper;
+import com.zl.lqian.mapper.UserInfoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     @Autowired
-    UserMapper userMapper;
+    UserInfoMapper userMapper;
 
     public User getUserInfo(String userId){
         User user = userMapper.findUserById(userId);

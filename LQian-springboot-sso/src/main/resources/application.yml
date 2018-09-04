@@ -7,6 +7,7 @@ eureka:
       defaultZone: http://localhost:8761/eureka/
   instance:
     prefer-ip-address: true
+    instance-id: http://127.0.0.1:6040
   #测试主库
 spring:
   application:
@@ -35,7 +36,7 @@ OAUTH2SERVER: http://localhost:6040
 security:
     oauth2:
         resource:
-            id: ${eureka.instance.instanceId}
+            id: ${eureka.instance.instance-id}
             token-info-uri: ${OAUTH2SERVER}/oauth/check_token
             user-info-uri: ${OAUTH2SERVER}/user
         client:
@@ -47,6 +48,12 @@ security:
             grant-type: password
             scope: app
             use-current-uri: false
+            client-secret: 123456
+    basic:
+        enabled: false
+mybatis:
+  # 指定sql映射文件位置
+  mapper-locations: classpath:mybaits/*.xml
 logging:
   config:
           classpath: log4j2.xml

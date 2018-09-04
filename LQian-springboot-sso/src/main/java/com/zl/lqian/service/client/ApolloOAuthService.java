@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(value="${client.feign.apollo}")
+@FeignClient(url = "http://localhost:6040",name = "apollo")
 public interface ApolloOAuthService {
 
     @RequestMapping(value = "/oauth/token", method = RequestMethod.POST)

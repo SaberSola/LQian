@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
-@RestController("/api/v1")
+@RestController()
 public class LoginController {
 
 
@@ -23,7 +23,6 @@ public class LoginController {
     ApolloOAuthService apolloOAuthService;
 
     @RequestMapping(value = "/loginSystem", method = RequestMethod.POST)
-    @ResponseBody
     public ResponseDTO login(@RequestBody JSONObject jsonObject) {
         String userName = jsonObject.getString("username");
         String password = jsonObject.getString("password");

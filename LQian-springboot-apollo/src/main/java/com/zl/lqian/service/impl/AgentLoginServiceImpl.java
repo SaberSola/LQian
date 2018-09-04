@@ -18,6 +18,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,7 +27,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Service
+@Component
 public class AgentLoginServiceImpl implements SsoAuthHandler {
 
 
@@ -52,9 +53,8 @@ public class AgentLoginServiceImpl implements SsoAuthHandler {
         if (user == null) {
             throw new UsernameNotFoundException("用户不存在");
         }
-        // Hash算法
-        String  passwordHashValue = MD5.GetMD5Code(MD5.GetMD5Code(user.getHashKey() + "-" + authentication.getCredentials()) + CommonConst.NEW_HASH_SET_KEY);
-        if (!passwordHashValue.equals(user.getPassword())) {
+        //TODO 这里可以进行密码加密校验
+        if (!user.getPassword().equals(user.getPassword())) {
             throw new BadCredentialsException("密码不正确");
         }
         // 登录成功，更新最后登录时间
@@ -69,7 +69,7 @@ public class AgentLoginServiceImpl implements SsoAuthHandler {
         }
         //取得该用户的权限
         List<String> userStringRoles = new ArrayList<String>();
-        if (userStringRoles == null){
+        if (userStringRoles.size() == 0){
             List<UserRoles> userRoles = userRolesMapper.findByUserId(user.getId());
             userRoles.stream().forEach(currentUserRoles -> {
                 userStringRoles.add(String.valueOf(currentUserRoles.getRole_id()));

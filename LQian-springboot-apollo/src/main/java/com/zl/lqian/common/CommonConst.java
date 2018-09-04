@@ -32,6 +32,6 @@ public class CommonConst {
      */
     public static Integer ADMIN_TYPE = 99;
 
-    public static String SAAS_AGENT_CLIENT_ID = "saas_agent";
+    public static String SAAS_AGENT_CLIENT_ID = "user";
 
 }

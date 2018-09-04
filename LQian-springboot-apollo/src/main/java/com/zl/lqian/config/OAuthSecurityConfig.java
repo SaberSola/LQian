@@ -21,7 +21,6 @@ import org.springframework.security.oauth2.provider.token.AuthorizationServerTok
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JdbcTokenStore;
-import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 import javax.sql.DataSource;
 import java.util.ArrayList;
@@ -83,7 +82,7 @@ public class OAuthSecurityConfig extends AuthorizationServerConfigurerAdapter {
 
             @Override
             public OAuth2AccessToken grant(String grantType, TokenRequest tokenRequest) {
-                if (delegate != null){
+                if (delegate == null){
                     delegate = new CompositeTokenGranter(getDefaultTokenGranters(endpoints));
                 }
                 return delegate.grant(grantType, tokenRequest);

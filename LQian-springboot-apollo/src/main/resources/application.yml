@@ -17,7 +17,7 @@ com.zl.lqian:
          driver-class-name: com.mysql.jdbc.Driver
   auth:
     datasource:
-        url: jdbc:mysql://mysql:3306/authuser?autoReconnect=true
+        url: jdbc:mysql://3306:3306/authuser?autoReconnect=true
         username: admin
         password: admin
         driver-class-name: com.mysql.jdbc.Driver
