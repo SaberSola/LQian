@@ -12,12 +12,12 @@ public class Memento  {
         return money;
     }
 
-    Memento(int money) {  // 构造函数(wide interface)
+    Memento(int money) {  // 构造函数(wide interfaces)
         this.money = money;
         this.fruits = new ArrayList();
     }
 
-    void addFruit(String fruit) { // 添加水果(wide interface)
+    void addFruit(String fruit) { // 添加水果(wide interfaces)
         fruits.add(fruit);
     }
 
