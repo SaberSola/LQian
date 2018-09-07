@@ -1,12 +1,18 @@
 package com.zl.lqian.client.abstracts;
 
 import com.alibaba.otter.canal.client.CanalConnector;
+import com.alibaba.otter.canal.client.CanalConnectors;
 import com.alibaba.otter.canal.protocol.exception.CanalClientException;
 import com.zl.lqian.client.interfaces.CanalClient;
 import com.zl.lqian.client.interfaces.TransponderFactory;
 import com.zl.lqian.client.transfer.DefaultMessageTransponder;
 import com.zl.lqian.config.ConfigProperties;
+import org.springframework.util.StringUtils;
 
+import java.net.InetSocketAddress;
+import java.net.SocketAddress;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -64,16 +70,57 @@ public abstract class AbstractCanalClient implements CanalClient {
 
     private CanalConnector processInstanceEntry(Map.Entry<String, ConfigProperties.Instance> instanceEntry) {
 
-        return null;
+        //配置
+        ConfigProperties.Instance instance = instanceEntry.getValue();
+        //声明连接
+        CanalConnector connector;
+
+        //这里需要判断是否是集群模式
+        if (instance.isClusterEnabled()){
+            //这里要是集群的话
+            List<SocketAddress> addresses = new ArrayList<>();
+            for (String s : instance.getZookeeperAddress()){
+
+                String[] entry = s.split(":");
+                if(entry.length > 2){
+                    if (entry.length != 2) {
+                        throw new CanalClientException("zookeeper 地址格式不正确，应该为 ip:port....:" + s);
+                    }
+                    //若符合设定规则，先加入集合
+                    addresses.add(new InetSocketAddress(entry[0], Integer.parseInt(entry[1])));
+                }
+            }
+            //要是集群的话
+            connector = CanalConnectors.newClusterConnector(addresses, instanceEntry.getKey(),
+                    instance.getUserName(), instance.getPassword());
+        }else {
+            //这里表示要是不是集群的话
+            connector = CanalConnectors.newSingleConnector(new InetSocketAddress(instance.getHost(), instance.getPort()),
+                    instanceEntry.getKey(), instance.getUserName(), instance.getPassword());
+        }
+
+        //开启链接
+        connector.connect();
+        //判断是不是含有过滤规则
+        if (!StringUtils.isEmpty(instance.getFilter())){
+            //canal链接订阅包含
+            connector.subscribe(instance.getFilter());
+        }else {
+            connector.subscribe();
+        }
+
+        //TODO 目前不了解链接反转的作用待研究
+        connector.rollback();
+        return connector;
     }
     @Override
     public void stop() {
-
+        setRunning(false);
     }
 
     @Override
     public boolean isRunning() {
-        return false;
+        return running;
     }
 
     /**
@@ -88,5 +135,11 @@ public abstract class AbstractCanalClient implements CanalClient {
         } else {
             throw new CanalClientException("无法解析 canal 的连接信息，请联系开发人员!");
         }
+    }
+
+
+
+    private void setRunning(boolean running) {
+        this.running = running;
     }
 }

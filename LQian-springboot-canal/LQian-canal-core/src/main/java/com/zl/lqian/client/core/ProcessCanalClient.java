@@ -1,6 +1,7 @@
 package com.zl.lqian.client.core;
 
 import com.alibaba.otter.canal.client.CanalConnector;
+import com.zl.lqian.annotation.ListenPoint;
 import com.zl.lqian.client.abstracts.AbstractCanalClient;
 import com.zl.lqian.client.interfaces.CanalEventListener;
 import com.zl.lqian.concurrent.DistributorThreadFactory;
@@ -8,7 +9,9 @@ import com.zl.lqian.config.ConfigProperties;
 import com.zl.lqian.util.SpringBeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.annotation.AnnotationUtils;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -68,14 +71,36 @@ public class ProcessCanalClient extends AbstractCanalClient {
     private void initListeners(){
 
         logger.debug("{}: 监听器正在初始化....",Thread.currentThread().getName());
-        //开始获取监听器
+        //开始获取监听器 注意此处或的是impl
         List<CanalEventListener> list = SpringBeanUtils.getInstance().getBeansOfType(CanalEventListener.class);
         if(list != null && list.size() > 0){
             //存入监听map
             listeners.addAll(list);
         }
         //通过注解方式
-
+        Map<String,Object> listenMap = SpringBeanUtils.getInstance().getBeansWithAnnotation(com.zl.lqian.annotation.CanalEventListener.class);
+        //TODO 这里不喜欢用双循环
+        if(listenMap != null){
+            for (Object target : listenMap.values()){
+                //方法获取
+                Method[] methods = target.getClass().getDeclaredMethods();
+                if (methods != null && methods.length > 0){
+                    for (Method method : methods){
+                        //这里找出注解标识的方法
+                        ListenPoint listenPoint = AnnotationUtils.findAnnotation(method,ListenPoint.class);
+                        if (listenPoint != null){
+                            annoListeners.add(new ListenerPoint(target, method, listenPoint ));
+                        }
+                    }
+                }
+            }
+        }
+        //监听结束
+        logger.debug("{}: 监听器初始化结束",Thread.currentThread().getName());
+        //这里要是没有监听初始化
+        if (listeners == null && annoListeners == null ){
+            logger.debug("{}: 该项目中没有任何监听的目标! ", Thread.currentThread().getName());
+        }
 
     }
 }
