@@ -25,7 +25,7 @@ public abstract class AbstractCanalClient implements CanalClient {
     /**
      * 转换工厂
      */
-    private TransponderFactory factory;
+    protected TransponderFactory factory;
 
 
     protected AbstractCanalClient(ConfigProperties configProperties){

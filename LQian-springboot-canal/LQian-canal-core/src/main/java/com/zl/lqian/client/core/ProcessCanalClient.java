@@ -5,6 +5,7 @@ import com.zl.lqian.client.abstracts.AbstractCanalClient;
 import com.zl.lqian.client.interfaces.CanalEventListener;
 import com.zl.lqian.concurrent.DistributorThreadFactory;
 import com.zl.lqian.config.ConfigProperties;
+import com.zl.lqian.util.SpringBeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -58,12 +59,22 @@ public class ProcessCanalClient extends AbstractCanalClient {
     @Override
     protected void process(CanalConnector connector, Map.Entry<String, ConfigProperties.Instance> config) {
 
+        executor.submit(factory.newTransponder(connector, config, listeners, annoListeners));
     }
 
     /**
      * 初始化
      */
     private void initListeners(){
+
+        logger.debug("{}: 监听器正在初始化....",Thread.currentThread().getName());
+        //开始获取监听器
+        List<CanalEventListener> list = SpringBeanUtils.getInstance().getBeansOfType(CanalEventListener.class);
+        if(list != null && list.size() > 0){
+            //存入监听map
+            listeners.addAll(list);
+        }
+        //通过注解方式
 
 
     }
