@@ -6,7 +6,7 @@ import com.alibaba.otter.canal.protocol.exception.CanalClientException;
 import com.zl.lqian.client.interfaces.CanalClient;
 import com.zl.lqian.client.interfaces.TransponderFactory;
 import com.zl.lqian.client.transfer.DefaultMessageTransponder;
-import com.zl.lqian.config.ConfigProperties;
+import com.zl.lqian.config.CanalConfig;
 import org.springframework.util.StringUtils;
 
 import java.net.InetSocketAddress;
@@ -26,7 +26,7 @@ public abstract class AbstractCanalClient implements CanalClient {
     /**
      * canal配置
      */
-    private ConfigProperties config;
+    private CanalConfig config;
 
     /**
      * 转换工厂
@@ -34,10 +34,10 @@ public abstract class AbstractCanalClient implements CanalClient {
     protected TransponderFactory factory;
 
 
-    protected AbstractCanalClient(ConfigProperties configProperties){
+    protected AbstractCanalClient(CanalConfig canalConfig){
 
-        Objects.requireNonNull(configProperties, "canalConfig 不能为空!");
-        this.config = configProperties;
+        Objects.requireNonNull(canalConfig, "canalConfig 不能为空!");
+        this.config = canalConfig;
         this.factory = (connector, config,listeners, annoListeners)->
             new DefaultMessageTransponder(connector, config, listeners, annoListeners);
     }
@@ -48,9 +48,9 @@ public abstract class AbstractCanalClient implements CanalClient {
     @Override
     public void start() {
 
-        Map<String, ConfigProperties.Instance> instanceMap = getConfig();
+        Map<String, CanalConfig.Instance> instanceMap = getConfig();
         //开启链接
-        for (Map.Entry<String, ConfigProperties.Instance> instanceEntry : instanceMap.entrySet()) {
+        for (Map.Entry<String, CanalConfig.Instance> instanceEntry : instanceMap.entrySet()) {
             process(processInstanceEntry(instanceEntry), instanceEntry);
         }
     }
@@ -60,7 +60,7 @@ public abstract class AbstractCanalClient implements CanalClient {
      * @param connector
      * @param config
      */
-    protected abstract void process(CanalConnector connector, Map.Entry<String, ConfigProperties.Instance> config);
+    protected abstract void process(CanalConnector connector, Map.Entry<String, CanalConfig.Instance> config);
 
     /**
      * TODO 处理链接实例
@@ -68,10 +68,10 @@ public abstract class AbstractCanalClient implements CanalClient {
      * @return
      */
 
-    private CanalConnector processInstanceEntry(Map.Entry<String, ConfigProperties.Instance> instanceEntry) {
+    private CanalConnector processInstanceEntry(Map.Entry<String, CanalConfig.Instance> instanceEntry) {
 
         //配置
-        ConfigProperties.Instance instance = instanceEntry.getValue();
+        CanalConfig.Instance instance = instanceEntry.getValue();
         //声明连接
         CanalConnector connector;
 
@@ -126,9 +126,9 @@ public abstract class AbstractCanalClient implements CanalClient {
     /**
      * 获取配置
      */
-    protected Map<String, ConfigProperties.Instance> getConfig(){
-        ConfigProperties configs = config;
-        Map<String, ConfigProperties.Instance> instanceMap;
+    protected Map<String, CanalConfig.Instance> getConfig(){
+        CanalConfig configs = config;
+        Map<String, CanalConfig.Instance> instanceMap;
         if (configs != null && (instanceMap = configs.getInstances()) != null && !instanceMap.isEmpty()) {
             //返回配置实例
             return configs.getInstances();

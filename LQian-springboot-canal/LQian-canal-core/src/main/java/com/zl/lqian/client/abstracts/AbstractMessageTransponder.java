@@ -6,7 +6,7 @@ import com.alibaba.otter.canal.protocol.exception.CanalClientException;
 import com.zl.lqian.client.core.ListenerPoint;
 import com.zl.lqian.client.interfaces.CanalEventListener;
 import com.zl.lqian.client.interfaces.MessageTransponder;
-import com.zl.lqian.config.ConfigProperties;
+import com.zl.lqian.config.CanalConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,7 +26,7 @@ public abstract class AbstractMessageTransponder implements MessageTransponder {
     /**
      * 连接配置
      */
-    protected final ConfigProperties.Instance config;
+    protected final CanalConfig.Instance config;
 
     /**
      * canal 服务指令
@@ -60,7 +60,7 @@ public abstract class AbstractMessageTransponder implements MessageTransponder {
     private static final Logger logger = LoggerFactory.getLogger(AbstractMessageTransponder.class);
 
 
-    public AbstractMessageTransponder(CanalConnector connector, Map.Entry<String, ConfigProperties.Instance> config,
+    public AbstractMessageTransponder(CanalConnector connector, Map.Entry<String, CanalConfig.Instance> config,
                                       List<CanalEventListener> listeners, List<ListenerPoint> annoListeners) {
 
         Objects.requireNonNull(connector,"连接器不能为空");

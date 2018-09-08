@@ -10,5 +10,5 @@ import org.springframework.stereotype.Component;
  */
 @Component
 //@ConfigurationProperties(prefix = "com.zl")*/
-public class ConfigProperties {
+public class CanalConfig {
 }

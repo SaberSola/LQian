@@ -7,7 +7,7 @@ import com.zl.lqian.client.abstracts.AbstractBasicMessageTransponder;
 import com.zl.lqian.client.core.CanalMsg;
 import com.zl.lqian.client.core.ListenerPoint;
 import com.zl.lqian.client.interfaces.CanalEventListener;
-import com.zl.lqian.config.ConfigProperties;
+import com.zl.lqian.config.CanalConfig;
 import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Method;
@@ -22,7 +22,7 @@ import java.util.function.Predicate;
 public class DefaultMessageTransponder extends AbstractBasicMessageTransponder {
 
 
-    public DefaultMessageTransponder(CanalConnector connector, Map.Entry<String, ConfigProperties.Instance> config,
+    public DefaultMessageTransponder(CanalConnector connector, Map.Entry<String, CanalConfig.Instance> config,
                                      List<CanalEventListener> listeners, List<ListenerPoint> annoListeners) {
         super(connector, config, listeners, annoListeners);
     }

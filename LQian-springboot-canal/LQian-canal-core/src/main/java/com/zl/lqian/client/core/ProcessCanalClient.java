@@ -5,7 +5,7 @@ import com.zl.lqian.annotation.ListenPoint;
 import com.zl.lqian.client.abstracts.AbstractCanalClient;
 import com.zl.lqian.client.interfaces.CanalEventListener;
 import com.zl.lqian.concurrent.DistributorThreadFactory;
-import com.zl.lqian.config.ConfigProperties;
+import com.zl.lqian.config.CanalConfig;
 import com.zl.lqian.util.SpringBeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +15,6 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Executors;
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -50,7 +49,7 @@ public class ProcessCanalClient extends AbstractCanalClient {
 
     protected static final int MAX_THREAD = Runtime.getRuntime().availableProcessors() << 1;
 
-    public ProcessCanalClient(ConfigProperties canalConfig) {
+    public ProcessCanalClient(CanalConfig canalConfig) {
         super(canalConfig);
         executor = new ThreadPoolExecutor(THREAD_NUM, MAX_THREAD,
                 120L, TimeUnit.SECONDS,
@@ -60,7 +59,7 @@ public class ProcessCanalClient extends AbstractCanalClient {
     }
 
     @Override
-    protected void process(CanalConnector connector, Map.Entry<String, ConfigProperties.Instance> config) {
+    protected void process(CanalConnector connector, Map.Entry<String, CanalConfig.Instance> config) {
 
         executor.submit(factory.newTransponder(connector, config, listeners, annoListeners));
     }

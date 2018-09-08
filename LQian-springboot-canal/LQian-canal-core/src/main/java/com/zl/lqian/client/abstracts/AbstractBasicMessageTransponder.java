@@ -8,7 +8,7 @@ import com.zl.lqian.client.core.CanalMsg;
 import com.zl.lqian.client.core.ListenerPoint;
 import com.zl.lqian.client.exception.CanalClientException;
 import com.zl.lqian.client.interfaces.CanalEventListener;
-import com.zl.lqian.config.ConfigProperties;
+import com.zl.lqian.config.CanalConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
@@ -27,7 +27,7 @@ public abstract class AbstractBasicMessageTransponder extends AbstractMessageTra
 
     private final static Logger logger = LoggerFactory.getLogger(AbstractBasicMessageTransponder.class);
 
-    public AbstractBasicMessageTransponder(CanalConnector connector, Map.Entry<String, ConfigProperties.Instance> config,
+    public AbstractBasicMessageTransponder(CanalConnector connector, Map.Entry<String, CanalConfig.Instance> config,
                                            List<CanalEventListener> listeners, List<ListenerPoint> annoListeners) {
         super(connector, config, listeners, annoListeners);
     }

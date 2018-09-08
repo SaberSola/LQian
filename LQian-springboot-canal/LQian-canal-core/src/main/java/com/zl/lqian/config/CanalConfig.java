@@ -12,16 +12,27 @@ import java.util.Set;
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @ConfigurationProperties(prefix = "canal.client")
-public class ConfigProperties {
+public class CanalConfig {
 
+    
+    /**
+     * 配置信息
+     */
     private Map<String, Instance> instances = new LinkedHashMap<>();
 
-
-
+    /**
+     * 返回实例
+     *
+     * @param
+     * @return
+     */
     public Map<String, Instance> getInstances() {
         return instances;
     }
 
+    /**
+     * 设置实例
+     */
     public void setInstances(Map<String, Instance> instances) {
         this.instances = instances;
     }
