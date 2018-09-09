@@ -9,7 +9,7 @@ eureka:
     prefer-ip-address: true
 spring:
   datasource:
-    url: jdbc:mysql://122.152.215.72:3306/authuser?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
+    url: jdbc:mysql://mysql:3306/authuser?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
     username: admin
     password: admin
     driver-class-name: com.mysql.jdbc.Driver
@@ -32,9 +32,10 @@ mapper:
 # exampl 是cannl服务中自定义的instance名称
 canal.client:
          instances:
-             example:clusterEnabled: false
-             example:host: 122.152.215.72
-             example:port: 11111
-             example:batchSize: 1000
-             example:acquireInterval: 1000
-             example:retryCount: 2
+             example:
+                clusterEnabled: false
+                host: localhost
+                port: 11111
+                batchSize: 1000
+                acquireInterval: 1000
+                retryCount: 2
