@@ -9,7 +9,13 @@ import com.zl.lqian.annotation.table.AlertTableListenPoint;
 import com.zl.lqian.annotation.table.CreateIndexListenPoint;
 import com.zl.lqian.annotation.table.CreateTableListenPoint;
 import com.zl.lqian.annotation.table.DropTableListenPoint;
+import com.zl.lqian.client.abstracts.AbstractMessageTransponder;
 import com.zl.lqian.client.core.CanalMsg;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
@@ -19,7 +25,17 @@ import java.util.List;
  */
 @CanalEventListener
 public class MyAnnoEventListener {
-	
+
+
+	private final RedisTemplate redisTemplate;
+
+	private static final Logger logger = LoggerFactory.getLogger(MyAnnoEventListener.class);
+	@Autowired
+	public MyAnnoEventListener(final RedisTemplate redisTemplate){
+		this.redisTemplate = redisTemplate;
+	}
+
+
 	@InsertListenPoint
 	public void onEventInsertData(CanalMsg canalMsg, CanalEntry.RowChange rowChange) {
 		System.out.println("======================注解方式（新增数据操作）==========================");
@@ -30,15 +46,15 @@ public class MyAnnoEventListener {
 			StringBuffer values = new StringBuffer();
 			rowData.getAfterColumnsList().forEach((c) -> {
 				colums.append(c.getName() + ",");
+				logger.debug("Name-------->",c.getName());
 				values.append("'" + c.getValue() + "',");
+				logger.debug("Value-------->",c.getValue());
 			});
-			
-			
+
 			sql += "INSERT INTO " + canalMsg.getTableName() + "(" + colums.substring(0, colums.length() - 1) + ") VALUES(" + values.substring(0, values.length() - 1) + ");";
 			System.out.println(sql);
 		}
 		System.out.println("\n======================================================");
-		
 	}
 	
 	@UpdateListenPoint

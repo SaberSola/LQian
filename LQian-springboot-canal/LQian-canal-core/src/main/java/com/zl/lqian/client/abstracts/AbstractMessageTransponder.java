@@ -57,6 +57,7 @@ public abstract class AbstractMessageTransponder implements MessageTransponder {
     /**
      * 日志记录
      */
+
     private static final Logger logger = LoggerFactory.getLogger(AbstractMessageTransponder.class);
 
 
@@ -96,9 +97,7 @@ public abstract class AbstractMessageTransponder implements MessageTransponder {
                 logger.debug("当前线程名称name:{},从canal服务器获取的消息》》》 数:{}",threadName,size);
                 //如果没有消息
                 if (batchId == -1 || size == 0) {
-                    if (logger.isDebugEnabled()) {
-                        logger.debug("{}: 没有任何消息啊，我休息{}毫秒", threadName, interval);
-                    }
+                    logger.debug("{}: 没有任何消息啊，我休息{}毫秒", threadName, interval);
                     Thread.sleep(interval);
                 }else {
                    //TODO 重点消息处理

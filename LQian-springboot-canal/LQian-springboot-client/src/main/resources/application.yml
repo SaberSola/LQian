@@ -13,17 +13,21 @@ spring:
     username: admin
     password: admin
     driver-class-name: com.mysql.jdbc.Driver
-#  redis:
-#    database: 0
-#    host:
-#    port: 6379
-#    timeout: 3000ms
-#      jedis:
-#        pool:
-#          max-idle: 500
-#          min-idle: 50
-#          max-active: 2000
-#          max-wait: 1000ms
+canal:
+  redis:
+    database: 0
+    host:
+    port: 6379
+    timeout: 3000ms
+    jedis:
+      pool:
+        max-idle: 500
+        min-idle: 50
+        max-active: 2000
+        max-wait: 1000ms
+    cluster: false
+#        nodes: 127.0.0.1:70001;127.0.1:7002
+#        redirects: 20
 mybatis:
   mapper-locations: classpath:mapper/*.xml
 mapper:
@@ -39,6 +43,9 @@ canal.client:
                 batchSize: 1000
                 acquireInterval: 1000
                 retryCount: 2
+
 logging:
-  config:
-    classpath: log4j2.xml
+  level:
+    root: info
+    com.zl.lqian.service : debug
+  path: "./logs"
