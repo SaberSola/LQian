@@ -9,13 +9,13 @@ eureka:
     prefer-ip-address: true
 spring:
   datasource:
-    url: jdbc:mysql://122.152.215.72:3306/authuser?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
+    url: jdbc:mysql://:3306/authuser?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
     username: admin
     password: admin
     driver-class-name: com.mysql.jdbc.Driver
 #  redis:
 #    database: 0
-#    host: 122.152.215.72
+#    host:
 #    port: 6379
 #    timeout: 3000ms
 #      jedis:
@@ -34,7 +34,7 @@ canal.client:
          instances:
              example:
                 clusterEnabled: false
-                host: 122.152.215.72
+                host:
                 port: 11111
                 batchSize: 1000
                 acquireInterval: 1000
