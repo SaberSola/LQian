@@ -16,11 +16,6 @@ import java.util.List;
 
 /**
  * 注解方法测试
- *
- * @author 阿导
- * @CopyRight 万物皆导
- * @created 2018/5/28 17:31
- * @Modified_By 阿导 2018/5/28 17:31
  */
 @CanalEventListener
 public class MyAnnoEventListener {

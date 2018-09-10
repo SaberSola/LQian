@@ -104,6 +104,12 @@ public abstract class AbstractMessageTransponder implements MessageTransponder {
                    //TODO 重点消息处理
                     distributeEvent(message);
                 }
+                //这里确认消息被处理
+                connector.ack(batchId);
+                //若是 debug模式
+                if (logger.isDebugEnabled()) {
+                    logger.debug("{}: 确认消息已被消费，消息ID:{}", threadName, batchId);
+                }
             }catch (CanalClientException e){
                 //开始retry count-1
                 atomicCount.decrementAndGet();

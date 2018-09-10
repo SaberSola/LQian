@@ -47,16 +47,14 @@ public abstract class AbstractDBOption implements IDBOption {
      * @param tableName   表名称
      * @param rowChange   binlog数据
      */
-    @Override
-    public void doOption(String destination, String schemaName, String tableName, CanalEntry.RowChange rowChange) {
-
-        if (eventType.equals(rowChange.getEventType())){
+    public void doChain(String destination, String schemaName, String tableName, CanalEntry.RowChange rowChange) {
+        if (this.eventType.equals(rowChange.getEventType())) {
             this.doOption(destination, schemaName, tableName, rowChange);
-        }else {
-            if (this.next == null){
+        } else {
+            if(this.next==null){
                 return;
             }
-            this.next.doOption(destination, schemaName, tableName, rowChange);
+            this.next.doChain(destination, schemaName, tableName,rowChange);
         }
     }
 }

@@ -48,7 +48,7 @@ public class DealCanalEventListener implements CanalEventListener {
      */
     @Override
     public void onEvent(String destination, String schemaName, String tableName, CanalEntry.RowChange rowChange) {
-        this.header.doOption(destination, schemaName, tableName, rowChange);
+        this.header.doChain(destination, schemaName, tableName, rowChange);
 
     }
 }
