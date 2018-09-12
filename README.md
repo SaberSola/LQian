@@ -23,3 +23,5 @@ WX: 13162706810
 9:springboot2.0 apollo 基于spring security的权限认证器
 
 10:springboot2.0 sso 单点登陆工程(想学习的加我微信...发sql语句)
+
+11:springboot版canal客户端 可以扩展binlog同步redis,solr,es等等等

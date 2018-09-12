@@ -4,6 +4,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -92,4 +93,13 @@ public final class SpringBeanUtils {
         return map;
     }
 
+    public static void main(String[] args){
+        Map map = new HashMap();
+        for (int i= 0; i< 50000; i ++){
+            String s = String.valueOf(i);
+            map.put(i,s);
+        }
+        System.out.println(map.size());
+
+    }
 }
