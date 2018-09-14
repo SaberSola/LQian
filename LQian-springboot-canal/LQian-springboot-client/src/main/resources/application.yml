@@ -1,0 +1,51 @@
+server:
+  port: 8099
+  connection-timeout: 1000ms
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:8761/eureka/
+  instance:
+    prefer-ip-address: true
+spring:
+  datasource:
+    url: jdbc:mysql://:3306/authuser?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
+    username: admin
+    password: admin
+    driver-class-name: com.mysql.jdbc.Driver
+canal:
+  redis:
+    database: 0
+    host:
+    port: 6379
+    timeout: 3000ms
+    jedis:
+      pool:
+        max-idle: 500
+        min-idle: 50
+        max-active: 2000
+        max-wait: 1000ms
+    cluster: false
+#        nodes: 127.0.0.1:70001;127.0.1:7002
+#        redirects: 20
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+mapper:
+  mappers: com.zl.lqian.mapper
+# canal 配置文件
+# exampl 是cannl服务中自定义的instance名称
+canal.client:
+         instances:
+             example:
+                clusterEnabled: false
+                host:
+                port: 11111
+                batchSize: 1000
+                acquireInterval: 1000
+                retryCount: 2
+
+logging:
+  level:
+    root: info
+    com.zl.lqian.service : debug
+  path: "./logs"

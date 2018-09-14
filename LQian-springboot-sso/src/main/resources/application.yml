@@ -1,0 +1,59 @@
+server:
+  port: 8078
+  connection-timeout: 1000ms
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+    instance-id: http://127.0.0.1:6040
+  #测试主库
+spring:
+  application:
+    name: LQIANSSO
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.jdbc.Driver
+    platform: mysql
+    url: jdbc:mysql://mysql:3306/authuser?autoReconnect=true
+    username: admin
+    password: admin
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT1FROMDUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    filters: stat,wall,log4j
+    logSlowSql: true
+OAUTH2SERVER: http://localhost:6040
+security:
+    oauth2:
+        resource:
+            id: ${eureka.instance.instance-id}
+            token-info-uri: ${OAUTH2SERVER}/oauth/check_token
+            user-info-uri: ${OAUTH2SERVER}/user
+        client:
+            user-authorization-uri: ${OAUTH2SERVER}/oauth/authorize
+            access-token-uri: ${OAUTH2SERVER}/oauth/token
+            authentication-scheme: query
+            client-authentication-scheme: form
+            client-id: user
+            grant-type: password
+            scope: app
+            use-current-uri: false
+            client-secret: 123456
+    basic:
+        enabled: false
+mybatis:
+  # 指定sql映射文件位置
+  mapper-locations: classpath:mybaits/*.xml
+logging:
+  config:
+          classpath: log4j2.xml

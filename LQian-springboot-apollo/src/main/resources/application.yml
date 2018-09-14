@@ -1,0 +1,43 @@
+server:
+  port: 6040
+  connection-timeout: 1000ms
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+    healthcheck: true
+  instance:
+    prefer-ip-address: true
+com.zl.lqian:
+  apollo:
+    datasource:
+         url: jdbc:mysql://mysql:3306/onirii?autoReconnect=true
+         username: admin
+         password: admin
+         driver-class-name: com.mysql.jdbc.Driver
+  auth:
+    datasource:
+        url: jdbc:mysql://3306:3306/authuser?autoReconnect=true
+        username: admin
+        password: admin
+        driver-class-name: com.mysql.jdbc.Driver
+spring:
+  datasource:
+    driverClassName: com.mysql.jdbc.Driver
+  application :
+    name: apollo
+# Ribbon
+php-interface.ribbon.NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
+hystrix.command.default.execution.timeout.enabled: false
+
+#Hystrix支持，如果为true，hystrix库必须在classpath中
+feign:
+  hystrix:
+    enabled: false
+  compression:
+    request:
+      enabled: true
+      mime-types: text/xml,application/xml,application/json
+      min-request-size: 2048
+    response:
+      enabled: true

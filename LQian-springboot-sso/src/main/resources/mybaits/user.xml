@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zl.lqian.mapper.UserInfoMapper">
+    <resultMap type="com.zl.lqian.entity.User" id="UserMap">
+        <id property="id" column="id" />
+        <result property="authType" column="auth_type" />
+        <result property="userId" column="user_id" />
+        <result property="password" column="password" />
+        <result property="userName" column="user_name" />
+        <result property="lastLoginTime" column="last_login_time" />
+        <result property="hashKey" column="hash_key" />
+    </resultMap>
+    <select id="findUserById" resultMap="UserMap">
+        SELECT
+        *
+        FROM
+        `user`
+        WHERE
+        user_id = #{userId}
+    </select>
+</mapper>
