@@ -51,6 +51,8 @@ public class MyAnnoEventListener {
 				logger.debug("Value-------->",c.getValue());
 			});
 
+			//TODO 这里可以进行同步es solr redis 操作
+
 			sql += "INSERT INTO " + canalMsg.getTableName() + "(" + colums.substring(0, colums.length() - 1) + ") VALUES(" + values.substring(0, values.length() - 1) + ");";
 			System.out.println(sql);
 		}
