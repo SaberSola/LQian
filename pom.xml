@@ -25,6 +25,7 @@
         <module>LQian-springboot-apollo</module>
         <module>LQian-springboot-sso</module>
         <module>LQian-springboot-canal</module>
+        <module>LQian-Jmx-learn</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
