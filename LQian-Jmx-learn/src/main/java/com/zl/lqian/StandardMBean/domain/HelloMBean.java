@@ -1,4 +1,4 @@
-package com.zl.lqian.domain;
+package com.zl.lqian.StandardMBean.domain;
 
 public interface HelloMBean {
     public String getName();

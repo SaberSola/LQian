@@ -9,13 +9,11 @@ import com.zl.lqian.annotation.table.AlertTableListenPoint;
 import com.zl.lqian.annotation.table.CreateIndexListenPoint;
 import com.zl.lqian.annotation.table.CreateTableListenPoint;
 import com.zl.lqian.annotation.table.DropTableListenPoint;
-import com.zl.lqian.client.abstracts.AbstractMessageTransponder;
 import com.zl.lqian.client.core.CanalMsg;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
