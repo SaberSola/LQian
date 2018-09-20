@@ -26,6 +26,7 @@
         <module>LQian-springboot-sso</module>
         <module>LQian-springboot-canal</module>
         <module>LQian-Jmx-learn</module>
+        <module>LQian-springboot-killticket</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
