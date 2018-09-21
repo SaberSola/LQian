@@ -1,4 +1,6 @@
 package com.zl.lqian.service.impl;
+import com.zl.lqian.concurent.DetialFailThread;
+import com.zl.lqian.dto.RetryDto;
 import com.zl.lqian.service.StationService;
 import com.zl.lqian.utils.HttpClientUtils;
 import com.zl.lqian.utils.JsonUtils;
@@ -41,6 +43,9 @@ public class StationServiceImpl implements StationService {
             JsonNode dataNode = jsonNode.get("data");
             if (dataNode == null) {
                 //TODO 这里入队列
+                RetryDto retryDto = new RetryDto();
+                retryDto.setCityName(cityName);
+                DetialFailThread.pushQueue(retryDto);
                 logger.error("解析城市信息json内的data数据为空，请看返回json是否有误，或者IP是否被封, url:" + stationsUrl + " ,json:" + json);
                 return null;
             }
