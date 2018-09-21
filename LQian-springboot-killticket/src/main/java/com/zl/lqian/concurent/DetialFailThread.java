@@ -44,8 +44,8 @@ public class DetialFailThread {
 
     public static void pushQueue(RetryDto retryDto){
         getInstance().failQueue.add(retryDto);
-        logger.debug(">>>>>>>>>>> xxl-job, push callback request url:{},param:{},headers:{}",retryDto.getUrl(),retryDto.getParam(),
-                retryDto.getHeaders());
+        logger.debug(">>>>>>>>>>> kill-ticket pushQueue request url:{},param:{},headers:{},cityName:{}",retryDto.getUrl(),retryDto.getParam(),
+                retryDto.getHeaders(),retryDto.getCityName());
     }
 
     //todo 启动监控线程
@@ -67,6 +67,7 @@ class worker implements Runnable{
                         //注意 如果队列没有值 则会一直处于阻塞状态
                         RetryDto retryDto = getInstance().failQueue.take();
                         //TODO  其实这里是可以设置短信预警哪里出错了
+                        //TODO  但是穷人买不起短信api
                         doRetary(retryDto);
                     }
 
@@ -85,7 +86,18 @@ class worker implements Runnable{
 
     public void stop(){
         stop = false;
-
+        executorService.shutdown();
+        try {
+            //此方法是检测线程池关闭后 池内线程是否全部执行完毕
+            if (executorService.awaitTermination(100, TimeUnit.SECONDS)) {
+                //为true 说明线程已经完全结束
+                 if (logger.isDebugEnabled()){
+                     logger.debug("线程池任务全部结束,线程已经关闭");
+                 }
+            }
+        }catch (InterruptedException e){
+            e.printStackTrace();
+        }
 
     }
 
