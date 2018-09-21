@@ -1,0 +1,30 @@
+server:
+  port: 8899
+  connection-timeout: 1000ms
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+  #测试主库
+spring:
+  application:
+    name: killticket-service
+
+killticket:
+  module:
+    fromstation: 商丘    #出发城市 如 深圳
+    tostation: 上海虹桥
+    justgd: true
+    deptdate: 2018-10-07
+    timerange: 10:30-17:30
+    seatname: 二等座
+    account:
+    password:
+    passengername:
+    passportno:
+    sex: M
+    contactmobile:
+    contactname:
+    mode: 1
