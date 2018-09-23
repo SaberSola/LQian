@@ -63,7 +63,9 @@ public class TaskApplicationRunner implements ApplicationRunner {
                 //这里多线程疯狂刷接口
                 for (int i= 0; i< 10; i++) {
                     threadExecutor.submit(() -> {
-                        monterTicketService.monitor();
+                        while (true) {
+                            monterTicketService.monitor();
+                        }
                     });
                 }
                 break;

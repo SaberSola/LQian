@@ -6,6 +6,7 @@ import com.zl.lqian.service.LoginService;
 import com.zl.lqian.service.MonterTicketService;
 import com.zl.lqian.service.OrderService;
 import com.zl.lqian.service.StationService;
+import com.zl.lqian.utils.DateUtils;
 import com.zl.lqian.utils.HttpClientUtils;
 import com.zl.lqian.utils.JsonUtils;
 import org.slf4j.Logger;
@@ -25,8 +26,6 @@ import java.util.concurrent.atomic.AtomicLong;
 public class MonterTicketServiceImpl implements MonterTicketService {
 
     private static final Logger logger = LoggerFactory.getLogger(MonterTicketServiceImpl.class);
-
-    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("H:mm");
 
     private final static  AtomicLong counter = new AtomicLong(1);
 
@@ -365,9 +364,9 @@ public class MonterTicketServiceImpl implements MonterTicketService {
                 return true;
             }
             //此时可能会有线程安全的问题
-            Date deptTimeDate = simpleDateFormat.parse(deptTime);
-            Date startDate = simpleDateFormat.parse(split[0]);
-            Date endDate = simpleDateFormat.parse(split[1]);
+            Date deptTimeDate = DateUtils.parse(deptTime);
+            Date startDate = DateUtils.parse(split[0]);
+            Date endDate = DateUtils.parse(split[1]);
             if (deptTimeDate.getTime() >= startDate.getTime() && deptTimeDate.getTime() <= endDate.getTime()) {
                 return true;
             }
