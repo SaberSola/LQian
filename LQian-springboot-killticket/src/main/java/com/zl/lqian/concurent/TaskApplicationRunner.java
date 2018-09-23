@@ -26,6 +26,13 @@ public class TaskApplicationRunner implements ApplicationRunner {
 
     private KillThreadExecutor threadExecutor;
 
+    private static volatile  boolean stop = true;
+    
+    
+    public static void stop(){
+        stop = false;
+    }
+    
     @Autowired
     public TaskApplicationRunner(final MonterTicketService service ,
                                  final TicketConfig ticketConfig,
@@ -54,7 +61,7 @@ public class TaskApplicationRunner implements ApplicationRunner {
             case "2":
                 //注意这里就是开启线程抢票
                 threadExecutor.submit(()->{
-                    while (true){
+                    while (stop){
                         monterTicketService.monitor();
                     }
                 });
@@ -63,7 +70,7 @@ public class TaskApplicationRunner implements ApplicationRunner {
                 //这里多线程疯狂刷接口
                 for (int i= 0; i< 10; i++) {
                     threadExecutor.submit(() -> {
-                        while (true) {
+                        while (stop) {
                             monterTicketService.monitor();
                         }
                     });

@@ -1,6 +1,8 @@
 package com.zl.lqian.service.impl;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.zl.lqian.concurent.DetialFailThread;
+import com.zl.lqian.concurent.TaskApplicationRunner;
 import com.zl.lqian.configuration.TicketConfig;
 import com.zl.lqian.service.LoginService;
 import com.zl.lqian.service.MonterTicketService;
@@ -226,6 +228,10 @@ public class MonterTicketServiceImpl implements MonterTicketService {
                 logger.info("票数:" + seatNum.asText() + " [" + seatName + " ￥" + classSeatNode.get("seatPrice").asText() + "]");
                 logger.info("状态:" + statusTextNode.asText());
                 if (statusTextNode.asText().contains("占座成功")) {
+
+                    TaskApplicationRunner.stop();
+                    DetialFailThread.getInstance().stop();
+
                     System.exit(0);
                     return;
                 }
