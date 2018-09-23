@@ -11,9 +11,42 @@ eureka:
 spring:
   application:
     name: killticket-service
-
-killticket:
-  module:
+  datasource:
+      url: jdbc:mysql://:3306/authuser?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
+      username: admin
+      password: admin
+      driver-class-name: com.mysql.jdbc.Driver
+canal:
+  redis:
+    database: 0
+    host:
+    port: 6379
+    timeout: 3000ms
+    jedis:
+      pool:
+        max-idle: 500
+        min-idle: 50
+        max-active: 2000
+        max-wait: 1000ms
+      cluster: false
+  #        nodes: 127.0.0.1:70001;127.0.1:7002
+  #        redirects: 20
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+mapper:
+  mappers: com.zl.lqian.mapper
+  # canal 配置文件
+  # exampl 是cannl服务中自定义的instance名称
+canal.client:
+        instances:
+            example:
+                clusterEnabled: false
+                host:
+                port: 11111
+                batchSize: 1000
+                acquireInterval: 1000
+                retryCount: 2
+killticket.module:
     fromstation: 商丘    #出发城市 如 深圳
     tostation: 上海虹桥
     justgd: true
@@ -22,9 +55,9 @@ killticket:
     seatname: 二等座
     account:
     password:
-    passengername:
+    passengername: 张磊
     passportno:
     sex: M
     contactmobile:
-    contactname:
-    mode: 1
+    contactname: 张磊
+    mode: 2

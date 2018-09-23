@@ -5,10 +5,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 @Configuration
 @EnableScheduling
@@ -22,7 +24,7 @@ public class ScheduleConfig implements SchedulingConfigurer {
     }
 
     @Bean(destroyMethod = "shutdown")
-    public Executor taskExecutor() {
+    public ScheduledExecutorService taskExecutor() {
         /**
          * scheduledThread线程的特点：
          * 1.支持定时以及周期性执行任务的需求
@@ -31,5 +33,18 @@ public class ScheduleConfig implements SchedulingConfigurer {
          */
         return Executors.newScheduledThreadPool(THREAD_NUM,
                 DistributorThreadFactory.create("killticket->process",false));
+    }
+
+    /**
+     *
+     * 暂时使用这个
+     * @return
+     */
+
+    @Bean
+    public ThreadPoolTaskScheduler taskScheduler() {
+        ThreadPoolTaskScheduler taskScheduler = new ThreadPoolTaskScheduler();
+        taskScheduler.setPoolSize(10);
+        return taskScheduler;
     }
 }
