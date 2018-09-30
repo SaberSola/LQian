@@ -53,11 +53,11 @@ killticket.module:
     deptdate: 2018-10-07
     timerange: 10:30-17:30
     seatname: 二等座
-    account:
-    password:
+    account: 13160706810
+    password: 19951215zl
     passengername: 张磊
-    passportno:
+    passportno: 412725199612150611
     sex: M
-    contactmobile:
+    contactmobile: 13162706810
     contactname: 张磊
     mode: 2

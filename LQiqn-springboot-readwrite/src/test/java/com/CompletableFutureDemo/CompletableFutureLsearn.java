@@ -13,9 +13,10 @@ import static org.junit.Assert.assertTrue;
 
 public class CompletableFutureLsearn {
 
-    public static void  test1 () throws Exception{
+    @Test
+    public  void  test1 () throws Exception{
 
-        CompletableFuture.supplyAsync(() -> {
+       CompletableFuture future =  CompletableFuture.supplyAsync(() -> {
             try {
                 Thread.sleep(2000);
                 System.out.println("zhangleicesji");
@@ -26,6 +27,7 @@ public class CompletableFutureLsearn {
             return "hello";
         }).thenAcceptBoth(CompletableFuture.supplyAsync(() -> {
             try {
+                Thread.sleep(3000);
                 System.out.println("alqiansf");
                 System.out.println(System.currentTimeMillis());
             } catch (Exception e) {
@@ -33,13 +35,18 @@ public class CompletableFutureLsearn {
             }
             return "world";
         }), (s1, s2) -> System.out.println(s1 + " and and and " + s2));
+
+       future.get();
     }
 
-    public static void test2() throws Exception{
-        CompletableFuture.supplyAsync(()->{
+    @Test
+    public  void test2() throws Exception{
+       CompletableFuture future=  CompletableFuture.supplyAsync(()->{
             try {
              /*   String result = print();
                 System.out.println(result);*/
+                System.out.println("fasdfasdfsad");
+                Thread.sleep(2000);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -49,12 +56,14 @@ public class CompletableFutureLsearn {
             try {
                // String result = print1();
                 //System.out.println(result);
+                Thread.sleep(2000);
                 System.out.println(System.currentTimeMillis());
             } catch (Exception e) {
                 e.printStackTrace();
             }
             return "s2";
         }),()-> System.out.println("hello world"));
+       future.join();
     }
     @Test
     public void completedFutureExample(){
@@ -103,7 +112,7 @@ public class CompletableFutureLsearn {
         CompletableFuture<String>cf = CompletableFuture.completedFuture("message").thenApplyAsync(s -> {
             System.out.println("守护线程是否："+Thread.currentThread().isDaemon());
             try {
-                Thread.sleep(1000);
+                Thread.sleep(3000);
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -146,7 +155,7 @@ public class CompletableFutureLsearn {
     @Test
     public void main(){
         StringBuilder result = new StringBuilder();
-        CompletableFuture.completedFuture("thenAccept message").thenAccept(s ->result.append(s));
+        CompletableFuture.completedFuture("thenAcceptmessage").thenAccept(s ->result.append(s));
         System.out.println(result.length());
     }
 
@@ -156,7 +165,7 @@ public class CompletableFutureLsearn {
     @Test
     public void thenAcceptAsyncExample(){
         StringBuilder result = new StringBuilder();
-        CompletableFuture<Void>cf = CompletableFuture.completedFuture("thenAcceptAsync message")
+        CompletableFuture<Void>cf = CompletableFuture.completedFuture("then")
                 .thenAcceptAsync(s ->result.append(s));
         cf.join();
         System.out.println(result.length());
@@ -228,11 +237,6 @@ public class CompletableFutureLsearn {
         CompletableFuture cf = CompletableFuture.completedFuture(original).thenApplyAsync(s -> delayedUpperCase(s))
                 .thenCombine(CompletableFuture.completedFuture(original).thenApplyAsync(s->delayedLowerCase(s)),
                         (s1,s2)-> s1 + s2);
-       /* try {
-            Thread.sleep(5000);
-        }catch (Exception e){
-            e.printStackTrace();
-        }*/
         //立即返回结果
         System.out.println(cf.getNow("abc"));
         System.out.println(cf.join());
