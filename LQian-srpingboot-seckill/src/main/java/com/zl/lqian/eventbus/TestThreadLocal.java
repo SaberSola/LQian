@@ -19,14 +19,10 @@ public class TestThreadLocal {
                 Integer res = random.nextInt();
                 System.out.println(res);
                 ConcurrentThreadLocal.getInstance().set("zl + " +res);
-               //String result = ConcurrentThreadLocal.getInstance().get();
-                //System.out.println(result);
-            });
-        }
-        for (int i= 0 ; i < 10 ; i++ ) {
-            executorService.execute(() -> {
+
                 String result = ConcurrentThreadLocal.getInstance().get();
                 System.out.println(result);
+                ConcurrentThreadLocal.getInstance().remove();
             });
         }
     }
