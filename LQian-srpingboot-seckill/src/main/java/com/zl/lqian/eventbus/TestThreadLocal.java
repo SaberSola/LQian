@@ -22,6 +22,8 @@ public class TestThreadLocal {
 
                 String result = ConcurrentThreadLocal.getInstance().get();
                 System.out.println(result);
+
+                //一定要清楚 否则可能引起内存泄漏
                 ConcurrentThreadLocal.getInstance().remove();
             });
         }
