@@ -25,3 +25,9 @@ WX: 13162706810
 10:springboot2.0 sso 单点登陆工程(想学习的加我微信...发sql语句)
 
 11:springboot版canal客户端 可以扩展binlog同步redis,solr,es等等等
+
+12:springboot版多线程抢票
+
+13:增加分布式id雪花算法发号器
+
+14:秒杀案例(慕课网上代码,只提供思路)
