@@ -23,7 +23,7 @@ public class ConcurrentThreadLocal {
 
     /**
      * get value.
-     * @return TccTransactionContext
+     * @return String
      */
     public String get() {
         return CURRENT_LOCAL.get();

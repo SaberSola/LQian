@@ -8,11 +8,11 @@ package com.zl.lqian.utils;
 public class MQConstants {
 	
 	/**你的业务交换机名称*/
-	public static final String BUSINESS_EXCHANGE = "business.exchange";
+	public static final String BUSINESS_EXCHANGE = "seckill.exchange";
 	/**你的业务队列名称*/
-	public static final String BUSINESS_QUEUE = "business.queue";
+	public static final String BUSINESS_QUEUE = "seckill.queue";
 	/**你的业务key*/
-	public static final String BUSINESS_KEY = "business.key";
+	public static final String BUSINESS_KEY = "seckill.key";
 
 	public static final String MQ_PRODUCER_RETRY_KEY = "mq.producer.retry.key";
 

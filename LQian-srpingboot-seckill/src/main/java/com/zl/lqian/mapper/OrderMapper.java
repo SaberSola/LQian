@@ -6,10 +6,12 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectKey;
+import org.springframework.stereotype.Component;
 
+@Component
 public interface OrderMapper {
 
-    @Select("select * from sk_order where user_id = #{userId} and goods_id = #{goodsId}")
+    @Select("select id, user_id as userId, goods_id as goodsId,order_id as orderId from sk_order where user_id = #{userId} and goods_id = #{goodsId}")
     public SeckillOrder getOrderByUserIdGoodsId(@Param("userId") long userId, @Param("goodsId") long goodsId);
 
     /**
@@ -26,6 +28,7 @@ public interface OrderMapper {
     @Insert("insert into sk_order (user_id, goods_id, order_id)values(#{userId}, #{goodsId}, #{orderId})")
     public int insertSeckillOrder(SeckillOrder order);
 
-    @Select("select * from sk_order_info where id = #{orderId}")
+    @Select("select user_id as userId,goods_id as goodsId,goods_name as goodsName,goods_count as goodsCount,goods_price as goodsPrice,order_channel as orderChannel," +
+            "status as status ,create_date as createDate  from sk_order_info where id = #{orderId}")
     public OrderInfo getOrderById(@Param("orderId")long orderId);
 }

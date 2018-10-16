@@ -5,6 +5,7 @@ import com.rabbitmq.client.Channel;
 import com.zl.lqian.utils.MQConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.ChannelAwareMessageListener;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
@@ -33,7 +34,7 @@ public class DeadQueueConfig {
         @Override
         public void onMessage(Message message, Channel channel) throws Exception {
 
-            MessageProperties  messageProperties = message.getMessageProperties();
+            MessageProperties messageProperties = message.getMessageProperties();
             //消息体
             String messageBody = String.valueOf(message.getBody());
 
