@@ -6,9 +6,11 @@ import java.net.UnknownHostException;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.http.*;
 import org.apache.http.client.HttpRequestRetryHandler;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.config.Registry;
 import org.apache.http.config.RegistryBuilder;
@@ -18,6 +20,8 @@ import org.apache.http.conn.socket.ConnectionSocketFactory;
 import org.apache.http.conn.socket.PlainConnectionSocketFactory;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.message.BasicHeaderElementIterator;
 import org.apache.http.protocol.HTTP;
@@ -29,6 +33,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 
 import javax.net.ssl.SSLException;
 
@@ -113,7 +118,6 @@ public class HttpClientConfig {
         };
     }
     @Bean
-    @Primary
     public HttpRequestRetryHandler httpRequestRetryHandler(){
         //请求重试
 
@@ -151,6 +155,51 @@ public class HttpClientConfig {
                 }
 
                 return false;
+            }
+        };
+    }
+
+    @Bean
+    @Primary
+    public CloseableHttpClient httpClient(){
+
+        RequestConfig requestConfig = RequestConfig.custom()
+                .setConnectionRequestTimeout(REQUEST_TIMEOUT)
+                .setConnectTimeout(CONNECT_TIMEOUT)
+                .setSocketTimeout(SOCKET_TIMEOUT).build();
+
+        return HttpClients.custom().setDefaultRequestConfig(requestConfig)
+                .setRetryHandler(httpRequestRetryHandler())
+                .setConnectionManager(poolingConnectionManager())
+                .setKeepAliveStrategy(connectionKeepAliveStrategy()).build();
+    }
+
+
+    /**
+     * 定时清理关闭的链接
+     * @param connectionManager
+     * @return
+     */
+    @Bean
+    public Runnable idleConnectionMonitor(final PoolingHttpClientConnectionManager connectionManager){
+
+        return new Runnable() {
+
+            @Scheduled(fixedDelay = 10000)
+            @Override
+            public void run() {
+                try {
+                    if (connectionManager != null) {
+                        LOGGER.trace("run IdleConnectionMonitor - Closing expired and idle connections...");
+                        connectionManager.closeExpiredConnections();
+                        connectionManager.closeIdleConnections(CLOSE_IDLE_CONNECTION_WAIT_TIME_SECS, TimeUnit.SECONDS);
+                    } else {
+                        LOGGER.trace("run IdleConnectionMonitor - Http Client Connection manager is not initialised");
+                    }
+                } catch (Exception e) {
+                    LOGGER.error("run IdleConnectionMonitor - Exception occurred. msg={}, e={}", e.getMessage(), e);
+                }
+
             }
         };
 
