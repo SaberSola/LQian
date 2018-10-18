@@ -17,7 +17,7 @@ spring:
     driverClassName: com.mysql.jdbc.Driver
     driver-class-name: com.mysql.jdbc.Driver
     platform: mysql
-    url: jdbc:mysql://mysql:3306/seckill?autoReconnect=true
+    url: jdbc:mysql://122.152.215.72:3306/seckill?autoReconnect=true
     username: admin
     password: admin
     initialSize: 5
@@ -33,7 +33,7 @@ spring:
     filters: stat,wall,log4j
     logSlowSql: true
   rabbitmq:
-    host: 45.32.254.172
+    host: 122.152.215.72
     port: 5672
     username: mqadmin
     password: mqadmin
@@ -53,7 +53,7 @@ spring:
         checkout-timeout: 10000ms
   redis:
     database: 0
-    host: 45.32.254.172
+    host: 122.152.215.72
     port: 6379
     timeout: 3000ms
     jedis:
@@ -62,9 +62,3 @@ spring:
         min-idle: 50
         max-active: 2000
         max-wait: 1000ms
-mybatis:
-  # 指定sql映射文件位置
-  mapper-locations: classpath:mybaits/*.xml
-logging:
-  config:
-    classpath: log4j2.xml

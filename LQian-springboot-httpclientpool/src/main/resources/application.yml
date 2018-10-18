@@ -1,0 +1,13 @@
+server:
+  port: 8081
+  connection-timeout: 1000ms
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+    instance-id: http://127.0.0.1:6040
+spring:
+  application:
+    name: HTTPCLIENTPOOL-SERVICE

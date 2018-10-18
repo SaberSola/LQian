@@ -28,6 +28,7 @@
         <module>LQian-Jmx-learn</module>
         <module>LQian-springboot-killticket</module>
         <module>LQian-srpingboot-seckill</module>
+        <module>LQian-springboot-httpclientpool</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
