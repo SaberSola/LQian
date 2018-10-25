@@ -101,7 +101,7 @@ public class SnowFlake {
 
         SnowFlake snowFlake = new SnowFlake(2, 3);
         long start = System.currentTimeMillis();
-        snowFlake.nextId();
+        System.out.println(snowFlake.nextId());
         long end = System.currentTimeMillis();
         System.out.println(end - start);
     }
