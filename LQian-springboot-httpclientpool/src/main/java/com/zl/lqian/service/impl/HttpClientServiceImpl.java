@@ -8,6 +8,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -20,6 +21,7 @@ public class HttpClientServiceImpl implements HttpClientService {
 
     private final CloseableHttpClient httpClient;
 
+    @Autowired
     public HttpClientServiceImpl(CloseableHttpClient httpClient){
         this.httpClient = httpClient;
     }

@@ -20,6 +20,9 @@ public class AccountService {
 
 
     public AccountDO findByUserId(String userId) {
+
+        AccountDO accountDO1 = new AccountDO();
+        accountDO1.setUserId(userId);
         final AccountDO accountDO = accountMapper.findByUserId(userId);
         try {
             Thread.sleep(1000);

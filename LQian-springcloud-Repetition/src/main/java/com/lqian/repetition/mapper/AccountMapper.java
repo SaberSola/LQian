@@ -9,4 +9,7 @@ public interface AccountMapper {
 
     @Select("select * from account where user_id =#{userId}")
     AccountDO findByUserId(String userId);
+
+
+    //AccountDO findByUserId(AccountDO accountDO);
 }
