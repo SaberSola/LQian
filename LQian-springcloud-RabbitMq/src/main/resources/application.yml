@@ -9,10 +9,9 @@ eureka:
     prefer-ip-address: true
 spring:
   rabbitmq:
-    host: 45.32.254.172
-    port: 5672
-    username: mqadmin
-    password: mqadmin
+    addresses:
+    username:
+    password:
     connection-timeout: 30000ms
     template:
       receive-timeout: 3000ms

@@ -40,15 +40,15 @@ public class RabbitConnectionConfig {
     @Bean
     public ConnectionFactory rabbitConnectionFactory() throws Exception{
 
-        logger.info("==> custom rabbitmq connection factory, addresses: {}", rabbitProperties.host);
+       // logger.info("==> custom rabbitmq connection factory, addresses: {}", rabbitProperties.host);
 
         RabbitConnectionFactoryBean factory = new RabbitConnectionFactoryBean();
 
-        if (rabbitProperties.host!= null) {
+        /*if (rabbitProperties.host!= null) {
             factory.setHost(rabbitProperties.host);
-        }
+        }*/
 
-        factory.setPort(rabbitProperties.port);
+        //factory.setPort(rabbitProperties.port);
         if (rabbitProperties.username != null) {
             factory.setUsername(rabbitProperties.username);
         }
@@ -73,7 +73,7 @@ public class RabbitConnectionConfig {
         factory.afterPropertiesSet();
         CachingConnectionFactory connectionFactory = new CachingConnectionFactory(factory.getObject());
         //设置消息必须confirm
-        //connectionFactory.setAddresses(shuffle(rabbitProperties.determineAddresses()));
+        connectionFactory.setAddresses(shuffle(rabbitProperties.address));
         connectionFactory.setPublisherConfirms(true);
         connectionFactory.setPublisherReturns(true);
 
