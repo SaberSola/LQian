@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lqian.repetition.mapper.AccountMapper">
 
-    <!--<select id="findByUserId" parameterType="com.lqian.repetition.entity.AccountDO" resultType="com.lqian.repetition.entity.AccountDO">-->
-      <!--select * from account where user_id =#{userId}-->
-    <!--</select>-->
+    <select id="findByUserId" parameterType="com.lqian.repetition.entity.AccountDO" resultType="java.lang.Integer">
+      select count(0) from account where user_id =#{userId}
+    </select>
 </mapper>

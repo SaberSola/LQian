@@ -11,11 +11,7 @@ import java.time.Duration;
 @ConfigurationProperties
 public class MqProperties {
 
-    @Value("${spring.rabbitmq.host}")
-    public String host;
 
-    @Value("${spring.rabbitmq.port}")
-    public Integer port;
 
     @Value("${spring.rabbitmq.username}")
     public String username;
@@ -47,5 +43,7 @@ public class MqProperties {
     @Value("${spring.rabbitmq.cache.channel.checkout-timeout}")
     public String  checkout_timeout;
 
+    @Value("${spring.rabbitmq.addresses}")
+    public String address;
 
 }

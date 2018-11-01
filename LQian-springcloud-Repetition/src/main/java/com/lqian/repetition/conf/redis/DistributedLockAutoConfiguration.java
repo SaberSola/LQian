@@ -2,6 +2,7 @@ package com.lqian.repetition.conf.redis;
 
 import com.lqian.repetition.lock.DistributedLock;
 import com.lqian.repetition.lock.RedisDistributedLock;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -13,12 +14,16 @@ import org.springframework.data.redis.core.RedisTemplate;
 public class DistributedLockAutoConfiguration {
 
 
+
+    @Autowired
+    RedisTemplate<Object, Object> redisTemplate;
+
     /**
-     * @param redisTemplate
+     * @param
      * @return
      */
     @Bean
-    public DistributedLock redisDistributedLock(RedisTemplate<Object, Object> redisTemplate){
+    public DistributedLock redisDistributedLock(){
         return new RedisDistributedLock(redisTemplate);
     }
 }
