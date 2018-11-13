@@ -32,6 +32,10 @@ public abstract class AbstractMessageListener implements ChannelAwareMessageList
      * s所有消费必须重写此方法
      * @param message
      * @param messageConverter
+     * RabbitMq ack
+     * deliveryTag：long - 消息投递的唯一标识，作用域为当前channel
+     * multiple：boolean - 是否启用批量确认机制
+     * requeue：boolean - 消息处理失败是重新放回队列还是直接丢弃
      */
     public abstract void receiveMessage(Message message, MessageConverter messageConverter);
 
@@ -59,7 +63,7 @@ public abstract class AbstractMessageListener implements ChannelAwareMessageList
             logger.error("RabbitMQ 消息消费失败，" + e.getMessage(), e);
             if (consumerCount >= MQConstants.MAX_CONSUMER_COUNT) {
                 // 入死信队列
-                channel.basicReject(deliveryTag, false);
+                channel.basicReject(deliveryTag, false); //直接丢弃
             } else {
                 // 重回到队列，重新消费,按照2的指数级递增
                 Thread.sleep((long) (Math.pow(MQConstants.BASE_NUM, consumerCount)*1000));
