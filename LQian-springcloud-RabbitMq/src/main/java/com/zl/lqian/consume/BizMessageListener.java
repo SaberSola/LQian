@@ -11,10 +11,16 @@ import org.springframework.stereotype.Component;
 @Component
 public class BizMessageListener extends AbstractMessageListener {
 
+    private static float f = 0.1f;
+
     private Logger LOGGER = LoggerFactory.getLogger(BizMessageListener.class);
     @Override
     public void receiveMessage(Message message, MessageConverter messageConverter) {
         Object bizObj = messageConverter.fromMessage(message);
         logger.info("get message success:"+bizObj.toString());
+    }
+
+     abstract class innerClass{
+
     }
 }

@@ -9,7 +9,7 @@ public class Test2Demo {
 
             }
         };
-        t.run();
+        t.start();
         System.out.println("dazhong");
     }
     static void dianping(){
