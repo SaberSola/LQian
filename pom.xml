@@ -32,6 +32,7 @@
         <module>LQian-springboot-algorithm</module>
         <module>LQian-jdk-read</module>
         <module>LQian-Learn-Reactor</module>
+        <module>LQian-springboot-activity</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
