@@ -33,6 +33,7 @@
         <module>LQian-jdk-read</module>
         <module>LQian-Learn-Reactor</module>
         <module>LQian-springboot-activity</module>
+        <module>LQian-springboot-Hystrix</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

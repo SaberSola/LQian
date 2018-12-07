@@ -7,6 +7,8 @@ import com.lqian.repetition.entity.AccountDO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+
 @RestController
 @RequestMapping("/api/v1")
 public class AccountController {
@@ -30,5 +32,16 @@ public class AccountController {
 
         return accountDO;
     }
+
+    @RequestMapping(value = "/importExcel",method = RequestMethod.GET)
+    public AccountDO importExcel(HttpServletResponse response) {
+
+
+         accountService.exportExcel(response);
+
+        return null;
+    }
+
+
 
 }
