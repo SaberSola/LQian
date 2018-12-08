@@ -10,7 +10,7 @@ eureka:
   #测试主库
 spring:
   application:
-    name: repetition
+    name: Hystrix
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.jdbc.Driver
@@ -43,9 +43,6 @@ spring:
         min-idle: 50
         max-active: 2000
         max-wait: 1000ms
-mybatis:
-  # 指定sql映射文件位置
-  mapper-locations: classpath:mapper/*.xml
 logging:
   config:
           classpath: log4j2.xml
