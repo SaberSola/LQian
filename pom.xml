@@ -34,6 +34,7 @@
         <module>LQian-Learn-Reactor</module>
         <module>LQian-springboot-activity</module>
         <module>LQian-springboot-Hystrix</module>
+        <module>LQian-learn-RxJava</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
