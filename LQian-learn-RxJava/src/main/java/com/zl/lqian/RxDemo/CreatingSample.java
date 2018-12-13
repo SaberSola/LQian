@@ -1,13 +1,17 @@
 package com.zl.lqian.RxDemo;
 
 import org.junit.Test;
+import rx.Notification;
 import rx.Observable;
 import rx.Observer;
 import rx.Subscriber;
 import rx.functions.*;
 import rx.schedulers.Schedulers;
+import sun.rmi.runtime.Log;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.*;
 
@@ -22,7 +26,7 @@ public class CreatingSample {
     @Test
     public void create() {
 
-       Observable observable =  Observable.create(new Observable.OnSubscribe<Integer>() {
+        Observable observable = Observable.create(new Observable.OnSubscribe<Integer>() {
             @Override
             public void call(Subscriber<? super Integer> observer) {   //只有有观察者订阅的时候才会执行
                 try {
@@ -37,7 +41,7 @@ public class CreatingSample {
                 }
             }
         });
-       observable.subscribe(new Subscriber<Integer>() {
+        observable.subscribe(new Subscriber<Integer>() {
             @Override
             public void onNext(Integer item) {
                 System.out.println("Next: " + item);
@@ -55,15 +59,16 @@ public class CreatingSample {
         });
 
     }
+
     /**
      * 直到有观察者订阅时才创建Observable，
      * 并且为每个观察者创建一个新的Observable
-     *
+     * <p>
      * 虽然订阅者订阅的是同一个observable
      * 事实上每个订阅者获取的是它们自己的单独的数据序列。
      */
     @Test
-    public void defer(){
+    public void defer() {
 
         Observable<Integer> observable = Observable.defer(new Func0<Observable<Integer>>() {
             @Override
@@ -116,8 +121,9 @@ public class CreatingSample {
                 }
         );
     }
+
     @Test
-    public void from1(){
+    public void from1() {
 
         Integer[] data = new Integer[]{1, 2, 3, 4, 5};
         Observable observable = Observable.from(data);
@@ -140,7 +146,7 @@ public class CreatingSample {
 
     }
 
-    public void from2(){
+    public void from2() {
 
         List<String> list = new ArrayList<String>();
         for (int i = 0; i < 5; i++) {
@@ -175,7 +181,7 @@ public class CreatingSample {
             public String call() throws Exception {
                 try {
                     Thread.sleep(10000);
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 return "Callable";
@@ -227,7 +233,7 @@ public class CreatingSample {
     }
 
     @Test
-    public void just(){
+    public void just() {
         Observable.just(1, 2, 3, 4, 5).subscribe(new Observer<Integer>() {
             @Override
             public void onCompleted() {
@@ -277,7 +283,7 @@ public class CreatingSample {
      * 复的次数。
      */
     @Test
-    public void repeat(){
+    public void repeat() {
 
         Observable<String> observable = Observable.just("one")
                 .repeat(5);
@@ -328,9 +334,9 @@ public class CreatingSample {
     }
 
     @Test
-    public void buffer(){
+    public void buffer() {
 
-        Observable<List<String>> observable = Observable.just("one","two","three").buffer(10);
+        Observable<List<String>> observable = Observable.just("one", "two", "three").buffer(10);
         observable.subscribe(new Observer<List<String>>() {
             @Override
             public void onCompleted() {
@@ -356,7 +362,7 @@ public class CreatingSample {
      * 转换了Observable
      */
     @Test
-    public void flatMap(){
+    public void flatMap() {
 
         Observable observable = Observable.just("one").flatMap(new Func1<String, Observable<?>>() {
             @Override
@@ -376,12 +382,12 @@ public class CreatingSample {
      * 抓换值
      */
     @Test
-    public void map(){
+    public void map() {
         Observable observable = Observable.just("one").map(new Func1<String, Object>() {
 
             @Override
             public Object call(String s) {
-                return s + "zhangleia" ;
+                return s + "zhangleia";
             }
         });
         observable.subscribe(new Action1<Object>() {
@@ -399,7 +405,7 @@ public class CreatingSample {
      * 第二项数据。它持续进行这个过程来产生剩余的数据序列
      */
     @Test
-    public void scan(){
+    public void scan() {
         Observable.just(1, 2, 3, 4, 5)
                 .scan(new Func2<Integer, Integer, Integer>() {
                     @Override
@@ -411,10 +417,12 @@ public class CreatingSample {
             public void onNext(Integer item) {
                 System.out.println("Next: " + item);
             }
+
             @Override
             public void onError(Throwable error) {
                 System.err.println("Error: " + error.getMessage());
             }
+
             @Override
             public void onCompleted() {
                 System.out.println("Sequence complete.");
@@ -423,22 +431,24 @@ public class CreatingSample {
     }
 
     @Test
-    public void filter(){
+    public void filter() {
         Observable.just(1, 2, 3, 4, 5)
                 .filter(new Func1<Integer, Boolean>() {
                     @Override
                     public Boolean call(Integer item) {
-                        return( item < 4 );
+                        return (item < 4);
                     }
                 }).subscribe(new Subscriber<Integer>() {
             @Override
             public void onNext(Integer item) {
                 System.out.println("Next: " + item);
             }
+
             @Override
             public void onError(Throwable error) {
                 System.err.println("Error: " + error.getMessage());
             }
+
             @Override
             public void onCompleted() {
                 System.out.println("Sequence complete.");
@@ -450,7 +460,7 @@ public class CreatingSample {
      * 只发射第一项
      */
     @Test
-    public void first(){
+    public void first() {
 
         Observable.just(1, 2, 3, 4, 5).first().subscribe(new Action1<Integer>() {
             @Override
@@ -461,7 +471,7 @@ public class CreatingSample {
     }
 
     @Test
-    public void firstOrDefault(){
+    public void firstOrDefault() {
         Observable.just(1, 2, 3, 4, 5).firstOrDefault(5, new Func1<Integer, Boolean>() {
             @Override
             public Boolean call(Integer integer) {
@@ -476,7 +486,7 @@ public class CreatingSample {
     }
 
     @Test
-    public void last(){
+    public void last() {
 
         Observable.just(1, 2, 3)
                 .last()
@@ -485,10 +495,12 @@ public class CreatingSample {
                     public void onNext(Integer item) {
                         System.out.println("Next: " + item);
                     }
+
                     @Override
                     public void onError(Throwable error) {
                         System.err.println("Error: " + error.getMessage());
                     }
+
                     @Override
                     public void onCompleted() {
                         System.out.println("Sequence complete.");
@@ -497,13 +509,12 @@ public class CreatingSample {
     }
 
     /**
-     *
      * 插入一个 1 变成 1，2，3
      */
     @Test
-    public void stratwith(){
+    public void stratwith() {
 
-        Observable.just(2,3).startWith(1).subscribe(new Action1<Integer>() {
+        Observable.just(2, 3).startWith(1).subscribe(new Action1<Integer>() {
             @Override
             public void call(Integer integer) {
                 System.out.println(integer);
@@ -512,14 +523,13 @@ public class CreatingSample {
     }
 
     /**
-     *
      * 打包操作
      */
     @Test
-    public void zip(){
+    public void zip() {
 
-        Observable<Integer> observable = Observable.just(1,2,3);
-        Observable<Integer> observ = Observable.just(2,3,4);
+        Observable<Integer> observable = Observable.just(1, 2, 3);
+        Observable<Integer> observ = Observable.just(2, 3, 4);
         Observable.zip(observable, observ, new Func2<Integer, Integer, Object>() {
 
             @Override
@@ -533,19 +543,212 @@ public class CreatingSample {
                 System.out.println(o);
             }
         });
+    }
 
+    @Test
+    public void materialize() {
+        Observable.just(1, 2, 3).materialize().subscribe(new Subscriber<Notification<Integer>>() {
+            @Override
+            public void onCompleted() {
+                System.out.println("completed");
+            }
 
+            @Override
+            public void onError(Throwable e) {
 
+            }
 
+            @Override
+            public void onNext(Notification<Integer> integerNotification) {
 
+                System.out.println(integerNotification.getValue());
+            }
+        });
+    }
 
+    /**
+     * 和上边的类似于序列化和反序列化
+     */
+    @Test
+    public void dematerialize() {
+        Observable<Integer> observable = Observable.just(1, 2, 3).materialize().dematerialize();
+        observable.subscribe(new Subscriber<Integer>() {
+            @Override
+            public void onCompleted() {
+                System.out.println("completed");
+            }
 
+            @Override
+            public void onError(Throwable e) {
+
+            }
+
+            @Override
+            public void onNext(Integer integerNotification) {
+
+                System.out.println(integerNotification);
+            }
+        });
+    }
+
+    @Test
+    public void delay() {
+        Observable<Integer> obs = Observable.create(new Observable.OnSubscribe<Integer>() {
+            @Override
+            public void call(Subscriber<? super Integer> subscriber) {
+                for (int i = 0; i < 5; i++) {
+                  /*  if(i>2){
+                        subscriber.onError(new Throwable("VALUE TO MAX"));
+                    }*/
+                    subscriber.onNext(i);
+                }
+                subscriber.onCompleted();
+            }
+        }).subscribeOn(Schedulers.computation());
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+        /*
+         * Delay操作符让原始Observable在发射每项数据之前都暂停一段指定的时间段。
+         * 效果是Observable发射的数据项在时间上向前整体平移了一个增量
+         *
+         * 注意：delay不会平移onError通知，它会立即将这个通知传递给订阅者，同时丢弃任何待发射的onNext通知。
+         * 然而它会平移一个onCompleted通知。
+         */
+        obs.delay(2, TimeUnit.SECONDS)
+                .subscribe(new Subscriber<Integer>() {
+                    @Override
+                    public void onCompleted() {
+                        System.out.println("delay onCompleted" + sdf.format(new Date()));
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        System.out.println("delay onError" + e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(Integer integer) {
+                        System.out.println("delay onNext:" + sdf.format(new Date()) + "->" + integer);
+                    }
+                });
+
+        /**
+         * 延迟订阅
+         */
+        obs.delaySubscription(2, TimeUnit.SECONDS)
+                .subscribe(new Subscriber<Integer>() {
+                    @Override
+                    public void onCompleted() {
+                        System.out.println("delaySubscription onCompleted" + sdf.format(new Date()));
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        System.out.println("delaySubscription onError" + e.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(Integer integer) {
+                        System.out.println("delaySubscription onNext:" + sdf.format(new Date()) + "->" + integer);
+                    }
+                });
     }
 
 
+    /**
+     * do doeach doOnNext
+     */
+    @Test
+    public void dodemo() {
 
+        Observable.just(1, 2, 3).doOnEach(new Action1<Notification<? super Integer>>() {
+            @Override
+            public void call(Notification<? super Integer> notification) {
+                System.out.println(notification.getValue());
+            }
+        }).subscribe();
 
+        Observable.just(1, 2, 3)
+                .doOnNext(new Action1<Integer>() {
+                    @Override
+                    public void call(Integer item) {
+                        if (item > 1) {
+                            throw new RuntimeException("Item exceeds maximum value");
+                        }
+                    }
+                }).subscribe(new Subscriber<Integer>() {
+            @Override
+            public void onNext(Integer item) {
+                System.out.println("Next: " + item);
+            }
 
+            @Override
+            public void onError(Throwable error) {
+                System.err.println("Error: " + error.getMessage());
+            }
 
+            @Override
+            public void onCompleted() {
+                System.out.println("Sequence complete.");
+            }
+        });
+    }
+    @Test
+    public void doOnSubscribe(){
 
+        Observable.just(1,2,3).doOnSubscribe(new Action0() {
+            @Override
+            public void call() {
+                System.out.println("被订阅");
+            }
+        }).doOnUnsubscribe(new Action0() {
+            @Override
+            public void call() {
+                System.out.println("被un订阅");
+            }
+        }).subscribe().unsubscribe();
+    }
+
+    /**
+     * 所有的全部满足条件才会返回True
+     */
+    @Test
+    public void testAll(){
+        Observable.just(1,2,3).all(new Func1<Integer, Boolean>() {
+            @Override
+            public Boolean call(Integer integer) {
+                return integer > 2;
+            }
+        }).subscribe(new Action1<Boolean>() {
+            @Override
+            public void call(Boolean aBoolean) {
+                System.out.println(aBoolean);
+            }
+        });
+    }
+
+    /**
+     * 只会接收一个
+     */
+    @Test
+    public void testAmp(){
+        Iterable<Observable<Integer>> observables = new ArrayList<>();
+        ((ArrayList<Observable<Integer>>) observables).add(Observable.just(2,2,3));
+        ((ArrayList<Observable<Integer>>) observables).add(Observable.just(1,3,4));
+        ((ArrayList<Observable<Integer>>) observables).add(Observable.just(2,6,6));
+        Observable.amb(observables).subscribe(new Subscriber<Integer>() {
+            @Override
+            public void onCompleted() {
+                System.out.println("Sequence complete.");
+
+            }
+            @Override
+            public void onError(Throwable e) {
+
+            }
+            @Override
+            public void onNext(Integer integer) {
+                System.out.println(integer);
+            }
+        });
+    }
 }
