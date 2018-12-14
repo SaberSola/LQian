@@ -16,6 +16,7 @@ public class ColdExample {
         Flux<String> source = Flux.fromIterable(Arrays.asList("blue", "green", "orange", "purple"))
                 .doOnNext(System.out::println)
                 .filter(s -> s.startsWith("o"))
+                .map(String::toLowerCase)
                 .map(String::toUpperCase);
 
         source.subscribe(d -> System.out.println("Subscriber 1: " + d));
