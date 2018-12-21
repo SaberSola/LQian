@@ -232,6 +232,7 @@ public class CompletableFutureLsearn {
      */
     @Test
     public void thenCombineAsyncExample(){
+        System.out.println(System.currentTimeMillis());
         String original = "Message";
         StringBuilder result = new StringBuilder();
         CompletableFuture cf = CompletableFuture.completedFuture(original).thenApplyAsync(s -> delayedUpperCase(s))
@@ -240,19 +241,20 @@ public class CompletableFutureLsearn {
         //立即返回结果
         System.out.println(cf.getNow("abc"));
         System.out.println(cf.join());
+        System.out.println(System.currentTimeMillis());
     }
 
     private static String delayedUpperCase(String s) {
-        delay();
+        delay(1000);
         return s.toUpperCase();
     }
     private static String delayedLowerCase(String s) {
-        delay();
+        delay(2000);
         return s.toLowerCase();
     }
 
-    public static void delay() {
-        int delay = 1000;
+    public static void delay(Integer delay) {
+
         try {
             Thread.sleep(delay);
         } catch (InterruptedException e) {
@@ -314,17 +316,19 @@ public class CompletableFutureLsearn {
      */
     @Test
     public void allOfAsyncExample(){
-
+        System.out.println(System.currentTimeMillis());
         StringBuilder result = new StringBuilder();
         List<String> messages = Arrays.asList("a", "b", "c");
         List<CompletableFuture> futures = messages.stream()
                 .map(msg -> CompletableFuture.completedFuture(msg).thenApplyAsync(s -> delayedUpperCase(s)))
                 .collect(Collectors.toList());
-        CompletableFuture.allOf(futures.toArray(new CompletableFuture[futures.size()]))
+        CompletableFuture future = CompletableFuture.allOf(futures.toArray(new CompletableFuture[futures.size()]))
                 .whenComplete((v, th) -> {
                     futures.forEach(cf -> System.out.println(cf.getNow(null)));
                     result.append("done");
-                }).toCompletableFuture().join();
+                }).toCompletableFuture();
+        System.out.println(future.join());
+        System.out.println(System.currentTimeMillis());
     }
 
 }
