@@ -24,11 +24,19 @@ public class MyInvocationHandler implements InvocationHandler {
          */
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-
+        System.out.println("打印method name  =  "  + method.getName());
         System.out.println("------插入前置通知代码-------------");
         // 执行相应的目标方法
         Object rs = method.invoke(target,args);
         System.out.println("------插入后置处理代码-------------");
+        System.out.println("----- 后置处理-------------");
+        System.out.println("----- 后置处理-------------");
+        System.out.println("----- 后置处理-------------");
         return rs;
+    }
+
+    @Override
+    public String toString() {
+        return "张磊";
     }
 }

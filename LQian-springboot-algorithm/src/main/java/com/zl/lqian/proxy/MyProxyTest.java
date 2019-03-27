@@ -27,7 +27,7 @@ public class MyProxyTest {
         System.getProperties().put("sun.misc.ProxyGenerator.saveGeneratedFiles", "true");
         //获取动态代理的类
         Class proxyClazz  = Proxy.getProxyClass(IHello.class.getClassLoader(),IHello.class);
-
+/*
         // 3、获得代理类的构造函数，并传入参数类型InvocationHandler.class
         Constructor constructor = proxyClazz.getConstructor(InvocationHandler.class);
 
@@ -35,7 +35,7 @@ public class MyProxyTest {
         // 4、通过构造函数来创建动态代理对象，将自定义的InvocationHandler实例传入
         IHello iHello1 = (IHello) constructor.newInstance(new MyInvocationHandler(new HelloImpl()));
         // 5、通过代理对象调用目标方法
-        iHello1.sayHello();
+        iHello1.sayHello();*/
 
         // =========================第二种==========================
         IHello iHello  = (IHello) Proxy.newProxyInstance(IHello.class.getClassLoader(),new Class[]{IHello.class},new MyInvocationHandler(new HelloImpl()));

@@ -24,7 +24,7 @@ public class AccountController {
      * @return
      */
     @RequestMapping(value = "/findByUserId",method = RequestMethod.POST)
-    @ConcurrentLimit
+    //@ConcurrentLimit
     public AccountDO findByUserId(@RequestBody JSONObject jsonObject) {
 
         System.out.println(jsonObject.toJSONString());
@@ -34,12 +34,12 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/importExcel",method = RequestMethod.GET)
-    public AccountDO importExcel(HttpServletResponse response) {
+    public  AccountDO importExcel(HttpServletResponse response) {
 
 
-         accountService.exportExcel(response);
-
-        return null;
+        // accountService.exportExcel(response);
+        AccountDO accountDO =  accountService.findByUserId("123");
+        return accountDO;
     }
 
 
