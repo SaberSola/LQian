@@ -18,67 +18,13 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
-public class AccountService {
 
-    @Autowired
-    private AccountMapper accountMapper;
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(AccountService.class);
+public interface AccountService {
 
 
 
-    public AccountDO findByUserId(String userId) {
-
-        AccountDO accountDO1 = new AccountDO();
-        accountDO1.setUserId(userId);
-        final AccountDO accountDO = accountMapper.findByUserId(userId);
-        try {
-            Thread.sleep(1000);
-        }catch (InterruptedException e){
-            e.printStackTrace();
-        }
-        LOGGER.debug("异步测试结果为----------------》" +accountDO.getBalance());
-        return accountDO;
-    }
+    AccountDO findByUserId(String userId);
 
 
-    public Boolean exportExcel(HttpServletResponse servletResponse) {
-
-        OutputStream out = null;
-        try {
-            out = servletResponse.getOutputStream();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        ExcelWriter writer = new ExcelWriter(out, ExcelTypeEnum.XLSX, true);
-        String fileName = "zhanglei" + System.currentTimeMillis();
-        Sheet sheet1 = new Sheet(1, 0, ExcelHeadData.class);
-        sheet1.setSheetName("sheet1");
-        List<ExcelHeadData> rows = new ArrayList<>();
-        //AccountDO accountDO = accountMapper.findByUserId("10000");
-
-        ExcelHeadData excelHeadData = new ExcelHeadData();
-        excelHeadData.setId("dsfafasdfasf");
-        excelHeadData.setEmployeeName("sfdaadsfa");
-        excelHeadData.setLastWorkDate("dsaffasfasff");
-        excelHeadData.setStatus("dfadf");
-        excelHeadData.setWorkNum("adsfaf");
-
-        rows.add(excelHeadData);
-
-        writer.write(rows, sheet1);
-        writer.finish();
-        servletResponse.setContentType("multipart/form-data");
-        servletResponse.setCharacterEncoding("utf-8");
-        servletResponse.setHeader("Content-disposition", "attachment;filename="+fileName+".xlsx");
-        try {
-            out.flush();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-
-        return null;
-    }
 
 }
