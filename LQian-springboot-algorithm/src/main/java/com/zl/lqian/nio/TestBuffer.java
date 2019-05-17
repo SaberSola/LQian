@@ -126,7 +126,6 @@ public class TestBuffer {
 
         //6. clear() : 清空缓冲区. 但是缓冲区中的数据依然存在，但是处于“被遗忘”状态
         buf.clear();
-
         System.out.println("-----------------clear()----------------");
         System.out.println(buf.position());
         System.out.println(buf.limit());
@@ -135,5 +134,7 @@ public class TestBuffer {
         System.out.println((char)buf.get());
 
     }
+
+
 
 }
