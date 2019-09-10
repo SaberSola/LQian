@@ -45,7 +45,7 @@ public class InterruptDemo {
         Thread.sleep(3000);
         stop = true;
         t.interrupt();
-        //t.join();
+        t.join();
         System.out.println("程序退出");
 
     }
