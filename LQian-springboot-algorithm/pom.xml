@@ -18,6 +18,15 @@
             <artifactId>junit</artifactId>
             <version>4.12</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.hotels.beans/bull-bean-transformer -->
+        <!-- https://mvnrepository.com/artifact/com.hotels.beans/bean-utils-library-parent -->
+        <dependency>
+            <groupId>com.hotels.beans</groupId>
+            <artifactId>bean-utils-library-parent</artifactId>
+            <version>1.4.7.3</version>
+        </dependency>
+
     </dependencies>
 
     <build>

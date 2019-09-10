@@ -79,6 +79,134 @@ public class AVLTree <TYPE extends Comparable<? super TYPE>> {
         return root;
     }
 
+    /**   height             height
+     *    3          10                   右右旋转           10      仍然失衡 左左旋转            5
+     *    2       5      15   0         --------->       5     15  --------------->        3    10
+     *    1     2                                      3                                 2         15
+     *    0       3                                  2
+     * 左右旋转(左子树的右节点)
+     * 插入节点3 整个树失衡
+     * 此时5是失衡点
+     *
+     * @param t
+     * @return
+     */
+    public Node leftRightRotate(Node t){
+        t.left = rightRotate(t.left);
+        return leftRotate(t);
+    }
+
+
+    /**
+     * 右子树的左节点 (右左旋转)
+     *            10                           10                                       15
+     *         5      15     左左旋转         5     15          仍然失衡                 10   18
+     *                   20  -------->               18       ----------------->     5       20
+     *                18                               20
+     *  15为失横点
+     * @param t
+     * @return
+     */
+    public Node rightLeft(Node t){
+        t.right = leftRotate(t.right);
+        return rightRotate(t);
+    }
+
+    public Node insert(TYPE x){
+        return insert(x,root);
+    }
+
+    /**
+     * @param x
+     * @param t
+     * @return
+     */
+    private Node insert(TYPE x,Node t){
+        if (t == null){//新增节点
+            return new Node(x,null,null);
+        }
+        int cmp = x.compareTo(t.element);
+        if (cmp < 0 ){ //左子树插入
+            t.left = insert(x,t.left);
+            //判断树是否失衡
+            int height = height(t.left) - height(t.right);
+            if (height == 2){
+                int leftcmp = x.compareTo(t.left.element);
+                if (leftcmp < 0){ //根节点 左子树的左节点
+                    //开始左左旋转
+                    t = leftRotate(t);
+                }else {
+                    //属于左右旋转 根节点左子树的右节点
+                    t = leftRightRotate(t);
+                }
+            }
+        }else if (cmp > 0){//右子树插入
+            t.right = insert(x,t.right);
+            int height = height(t.right) - height(t.left);
+            if (height == 2){ //此处节点失衡
+                int rightcmp = x.compareTo(t.right.element);
+                if (rightcmp > 0){
+                    //右子树的右节点
+                    //右右旋转
+                   t = rightRotate(t);
+                }else {
+                    //右左旋转
+                   t = rightLeft(t);
+                }
+            }
+        }else {
+            //todo 节点相同 做一些事情
+        }
+        t.height = Math.max(height(t.left), height(t.right)) + 1;
+        return t;
+    }
+
+    public Node delete(TYPE x){
+        return delete(x,root);
+    }
+
+
+    private Node delete(TYPE x,Node t){
+        if (t == null){
+            return null;
+        }
+        //开始查找节点
+        int cmp = x.compareTo(t.element);
+        if (cmp < 0){ // 属于根节点的左子树
+            t.left = delete(x,t.left);
+            //计算height
+            int leftheight = height(t.left) - height(t.right);
+            if (leftheight == 2){ //此处节点失衡
+                int leftcmp = x.compareTo(t.left.element);
+                if (leftcmp < 0){ //左左旋转
+                    t = leftRotate(t);
+                }else {
+                    //左右
+                    t = leftRightRotate(t);
+                }
+            }
+        }else if (cmp > 0){ //属于节点右子树
+            int rightheight = height(root.right) - height(root.left);
+            if (rightheight == 2){//次数节点失衡
+                int rightcmp = x.compareTo(t.right.element);
+                if (rightcmp > 0){
+                    //右右旋转
+                    t = rightRotate(t);
+                }else {
+                    //youzuo
+                    t = rightLeft(t);
+                }
+            }
+        }else { //找到节点
+            //找到要删除的节点
+        }
+        return t;
+    }
+
+
+
+
+
 
     private class Node{
 
@@ -97,5 +225,8 @@ public class AVLTree <TYPE extends Comparable<? super TYPE>> {
             this.height  = 0;
         }
 
+    }
+
+    public static void main(String[] args) {
     }
 }
