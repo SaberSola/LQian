@@ -22,9 +22,9 @@ public class ToBean {
 
 
 
-    public ToBean(@ConstructorArg("name") final String differentName,
-                  @ConstructorArg("id")   final Integer id,
-                  @ConstructorArg("list") final List list){
+    public ToBean(@ConstructorArg(value = "name") final String differentName,
+                  @ConstructorArg(value = "id")   final Integer id,
+                  @ConstructorArg(value = "list") final List list){
         this.differentName = differentName;
         this.id = id;
         this.list = list;
