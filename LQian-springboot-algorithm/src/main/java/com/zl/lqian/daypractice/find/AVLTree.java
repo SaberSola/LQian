@@ -199,6 +199,10 @@ public class AVLTree <TYPE extends Comparable<? super TYPE>> {
             }
         }else { //找到节点
             //找到要删除的节点
+            if (t.left == null) {return t.right;}
+            if (t.right == null) {return t.left;}
+            Node n = t;
+            //todo 删除操作
         }
         return t;
     }
