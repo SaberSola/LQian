@@ -6,8 +6,10 @@ import com.zl.github.exception.InvalidBeanException;
 import com.zl.github.exception.MissingFieldException;
 import com.zl.github.model.FieldTransformer;
 
+import javax.swing.text.html.Option;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.util.Optional;
 
 import static com.zl.github.constant.Defaults.defaultValue;
 import static java.util.Objects.nonNull;
@@ -63,11 +65,13 @@ public class TransformerImpl extends AbsTransformer {
      * @param breadcrumb
      * @param <T>
      * @param <K>
+     * todo
      */
     private <T, K> void injectAllFields(final T sourceObj, final K targetObject, final String breadcrumb) {
         Class<?> targetObjectClass = targetObject.getClass();
-        classUtils.getDeclaredFields(targetObjectClass, true)
-                .forEach(field -> reflectionUtils.setFieldValue(targetObject, field, ));
+      /*  classUtils.getDeclaredFields(targetObjectClass, true)
+                //.parallelStream()
+                .forEach(field -> reflectionUtils.setFieldValue(targetObject, field, getFieldValue(sourceObj, targetObjectClass, field, breadcrumb)));*/
     }
 
     private <T, K> void injectNotFinalFields(final T sourceObj, final K targetObject, final String breadcrumb) {
@@ -97,9 +101,14 @@ public class TransformerImpl extends AbsTransformer {
         boolean isTransformerFunctionDefined = nonNull(transformerFunction);
         Object fieldValue = getSourceFieldValue(sourceObj, sourceFieldName, field, isTransformerFunctionDefined);
         if (nonNull(fieldValue)){
-            
+            boolean notPrimitiveAndNotSpecialType = !primitiveType &! classUtils.isSpecialType(fieldType);
+            if (!isTransformerFunctionDefined
+            && (notPrimitiveAndNotSpecialType || Optional.class.isAssignableFrom(fieldValue.getClass()))){
+                fieldValue = getFieldValue(targetClass,field,fieldValue,fieldBreadcrumb);
+            }
         }
 
+        return null;
     }
 
     private String evalBreadcrumb(final String fieldName, final String breadcrumb) {
@@ -142,4 +151,18 @@ public class TransformerImpl extends AbsTransformer {
         return fieldValue;
     }
 
+    /**
+     * todo
+     * @param targetClass
+     * @param field
+     * @param fieldValue
+     * @param breadcrumb
+     * @param <K>
+     * @return
+     */
+    private <K> Object getFieldValue(final Class<K> targetClass, final Field field, final Object fieldValue, final String breadcrumb) {
+
+        return null;
+
+    }
 }
