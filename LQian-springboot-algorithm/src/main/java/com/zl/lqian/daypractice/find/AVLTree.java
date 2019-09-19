@@ -201,15 +201,31 @@ public class AVLTree <TYPE extends Comparable<? super TYPE>> {
             //找到要删除的节点
             if (t.left == null) {return t.right;}
             if (t.right == null) {return t.left;}
-            Node n = t;
+            Node node = t;
+            t = min(t.right);
+            t.right = deleteMin(t.right);// min(x.right)
             //todo 删除操作
+            node.left = t.left;
+            t.height = 1 + Math.max(height(t.left), height(t.right));
         }
         return t;
     }
 
 
+   private Node min(Node root){
+        if (root.left == null){
+            return root;
+        }
+        return min(root.left);
+   }
 
-
+   private Node deleteMin(Node root){
+        if (root.left == null){
+            return root.right;
+        }
+       root.left = deleteMin(root.left);
+       return root;
+   }
 
 
     private class Node{

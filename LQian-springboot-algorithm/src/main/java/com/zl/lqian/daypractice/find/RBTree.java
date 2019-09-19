@@ -144,6 +144,40 @@ public class RBTree<TYPE extends Comparable<? super TYPE>> {
     }
 
 
+    public Node min(Node root){
+        if (root.left == null){
+            return root;
+        }
+        return min(root.left);
+    }
+
+    public Node deleteMin(){
+        return null;
+    }
+
+    private int balanceFactor(Node h) {
+        return height(h.left) - height(h.right);
+    }
+
+    private Node balance(Node h){
+        if (balanceFactor(h) < -1){ //  left - right < -1  右子树高度 > 左子树
+            if (balanceFactor(h.right) > 0){  //h的右子树 判断是右子树的左 节点 还是右节点  left - right > 0 说明是左节点 需要右子树左节点旋转
+                //先左节点旋转
+               h.right = leftRotate(h);
+            }
+            //仍然失衡 旋转
+            h = rightRotate(h);//新的根节点
+        }else if (balanceFactor(h) > 1){ //left - right > 1 左子树的高度 > 右子树
+            if (balanceFactor(h.left) < 0){ //h 的左子树 判断是左子树的 左节点还是右节点 left - right < 0 说明是左子树的右节点需要旋转
+                h.left = rightRotate(h);
+            }
+            h = leftRotate(h);
+        }
+        return h;
+    }
+
+
+
     private class Node {
 
         private TYPE type;
