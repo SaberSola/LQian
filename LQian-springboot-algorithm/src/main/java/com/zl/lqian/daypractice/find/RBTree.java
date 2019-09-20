@@ -1,10 +1,12 @@
 package com.zl.lqian.daypractice.find;
 
+import com.sun.deploy.util.BlackList;
+
 import java.lang.reflect.Type;
 
 /**
  * 红黑树
- *
+ * todo 删除操作
  * @param <TYPE>
  */
 public class RBTree<TYPE extends Comparable<? super TYPE>> {
@@ -38,8 +40,8 @@ public class RBTree<TYPE extends Comparable<? super TYPE>> {
 
     /**
      * 红黑树的旋转                                    8                  6
-     * red   6        9  ----->   5    8 red
-     * 5    7                     7   9
+     *                                    red   6        9  ----->   5    8 red
+     *                                       5    7                     7   9
      * 假设此时6节点是红节点 需要旋转 此时
      * 左旋转
      *
@@ -63,8 +65,8 @@ public class RBTree<TYPE extends Comparable<? super TYPE>> {
     /**
      * t
      * 红黑树的右旋转                                     8    root                           10
-     * 7        10   red        ------> red  8    11
-     * 9    11                      7   9
+     *                                             7        10   red        ------> red  8    11
+     *                                         9    11                      7   9
      *
      * @return
      */
@@ -151,9 +153,45 @@ public class RBTree<TYPE extends Comparable<? super TYPE>> {
         return min(root.left);
     }
 
-    public Node deleteMin(){
-        return null;
+
+    public void deleteMin(){
+        if (!isRed(root.right) && isRed(root.left)){
+            root.color = RED;
+        }
+        root = deleteMin(root);
+        if (root != null){
+            root.color = BLACK;
+        }
     }
+
+    public Node deleteMin(Node node){
+        if (node.left == null){
+            return null;
+        }
+        if (!isRed(node.left) && !isRed(node.left.left)){ //连续俩个节点都是黑色的左节点
+            //node = moveRedLeft();
+        }
+        node.left = deleteMin(node.left);
+        return balance(node);
+    }
+
+    private Node moveRedLeft(Node h) {
+        flipColors(h);
+        if (isRed(h.right.left)) {
+            h.right = leftRotate(h.right);
+            h = rightRotate(h);
+            flipColors(h);
+        }
+        return h;
+    }
+   /* private Node moveRedRight(Node h) {
+        flipColors(h);
+        if (isRed(h.left.left)) {
+            (h);
+            flipColors(h);
+        }
+        return h;
+    }*/
 
     private int balanceFactor(Node h) {
         return height(h.left) - height(h.right);
