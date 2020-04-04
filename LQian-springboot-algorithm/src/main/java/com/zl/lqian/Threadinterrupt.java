@@ -28,6 +28,7 @@ public class Threadinterrupt {
                 } catch (InterruptedException e) {
                     e.printStackTrace(); //线程处于中断时会跑遗产 但是在异常中一定要再次中断 否则会有死循环
                     Thread.currentThread().interrupt();
+
                 }
             }
             System.err.println("done work");

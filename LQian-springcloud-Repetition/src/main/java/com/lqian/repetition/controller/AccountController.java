@@ -5,6 +5,7 @@ import com.lqian.repetition.Service.AccountService;
 import com.lqian.repetition.conf.annotation.ConcurrentLimit;
 import com.lqian.repetition.entity.AccountDO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -23,12 +24,10 @@ public class AccountController {
      * @param userId
      * @return
      */
-    @RequestMapping(value = "/findByUserId",method = RequestMethod.POST)
-    //@ConcurrentLimit
-    public AccountDO findByUserId(@RequestBody JSONObject jsonObject) {
-
-        System.out.println(jsonObject.toJSONString());
-        AccountDO accountDO = accountService.findByUserId(jsonObject.getString("userId"));
+    @RequestMapping(value = "/findByUserId",method = RequestMethod.GET)
+    @ConcurrentLimit
+    public AccountDO findByUserId(@RequestParam String userId) {
+        AccountDO accountDO = accountService.findByUserId(userId);
 
         return accountDO;
     }

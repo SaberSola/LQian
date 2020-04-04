@@ -15,7 +15,6 @@ import org.springframework.context.annotation.Configuration;
 	exclude = {DataSourceAutoConfiguration.class })
 @MapperScan("com.lqian.repetition.mapper")
 @ServletComponentScan
-@EnableEurekaClient
 public class App {
 
 	private static final Logger logger = LogManager.getLogger(App.class);

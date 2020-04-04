@@ -1,5 +1,8 @@
 package com.zl.lqian.jianzhioffer;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * @Author zl
  * @Date 2019-09-27
@@ -10,12 +13,13 @@ public class Common {
     /**
      * 二叉树
      */
+    @Setter
     public static class TreeNode {
-        int val;
-        TreeNode left;
-        TreeNode right;
+        public int val;
+        public TreeNode left;
+        public TreeNode right;
 
-        TreeNode(int x) {
+        public TreeNode(int x) {
             val = x;
         }
     }

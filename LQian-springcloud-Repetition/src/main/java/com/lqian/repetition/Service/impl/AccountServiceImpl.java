@@ -5,6 +5,7 @@ import com.alibaba.excel.metadata.Sheet;
 import com.alibaba.excel.support.ExcelTypeEnum;
 import com.lqian.repetition.Service.AccountService;
 import com.lqian.repetition.Service.ExcelHeadData;
+import com.lqian.repetition.conf.annotation.ConcurrentLimit;
 import com.lqian.repetition.entity.AccountDO;
 import com.lqian.repetition.mapper.AccountMapper;
 import org.slf4j.Logger;
@@ -28,6 +29,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     @Transactional
+    @ConcurrentLimit
     public AccountDO findByUserId(String userId){
 
         AccountDO accountDO1 = new AccountDO();
