@@ -25,6 +25,7 @@ public class Solution26 {
             return null;
         }
         ArrayList<Common.TreeNode> list = new ArrayList<>();
+        mid(pRootOfTree,list);
         Common.TreeNode head = list.get(0);
         Common.TreeNode pre = head;
         head.left = null;
