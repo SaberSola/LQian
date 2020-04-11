@@ -33,6 +33,4 @@ public class Solution40 {
         return Math.max(left,right) + 1;
     }
 
-
-
 }
