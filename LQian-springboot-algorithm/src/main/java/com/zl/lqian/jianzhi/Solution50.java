@@ -65,7 +65,7 @@ public class Solution50 {
 
     public static void main(String[] args) {
         int[] n = {2,4,3,1,4};
-        int[] duplication = new int[]{};
+        int[] duplication = new int[5];
         duplicate2(n,n.length,duplication);
     }
 
