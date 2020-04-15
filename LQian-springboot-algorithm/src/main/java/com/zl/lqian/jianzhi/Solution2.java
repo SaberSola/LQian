@@ -10,11 +10,6 @@ package com.zl.lqian.jianzhi;
  */
 public class Solution2 {
 
-
-    public static void main(String[] args) {
-        System.out.println(replaceSpace("We Are Happy"));
-    }
-
     /**
      * 暴力
      * @param target
@@ -24,16 +19,17 @@ public class Solution2 {
         return target.toString().replace(" ", "%20");
     }
 
-    public static String replaceSpace(String str) {
-        StringBuilder sb = new StringBuilder();
-        for(int i=0;i<str.length();i++){
-            char c = str.charAt(i);
-            if(c == ' '){
-                sb.append("%20");
-            }else{
-                sb.append(c);
+
+    public String replace(StringBuffer str) {
+        int n = str.length();
+        for(int i=0; i<n; i++) {
+            if(str.charAt(i) == ' ') {
+                n += 2;
+                str.replace(i, i+1, "%20");
             }
         }
-        return sb.toString();
+        return str.toString();
     }
+
+
 }
