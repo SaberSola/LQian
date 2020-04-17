@@ -28,7 +28,32 @@ public class Solution6 {
             } else i++;  // 巧妙避免了offer书上说的坑点（1 0 1 1 1）
         }
         return array[i];
+
     }
+
+    /**
+     * 二分查找的变种
+     * @param array
+     * @return
+     */
+    public int minNumberInRotateArray2(int[] array) {
+        int i = 0, j = array.length - 1;
+        while (i < j) {
+            if (array[i] < array[j]) {
+                return array[i];
+            }
+            int mid = (i + j) >> 2;
+            if (array[mid] > array[i]){
+                i = mid +1;
+            }else if (array[mid] < array[j]){
+                j = mid;
+            }else i++;
+
+        }
+        return array[i];
+    }
+
+
 
 
 }

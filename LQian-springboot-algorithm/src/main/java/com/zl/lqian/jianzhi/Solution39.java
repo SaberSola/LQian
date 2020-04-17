@@ -20,4 +20,6 @@ public class Solution39 {
         return Math.max(left,right) + 1;
     }
 
+
+
 }

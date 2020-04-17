@@ -17,19 +17,20 @@ public class Solution26 {
 
     /**
      * 中序遍历
+     *
      * @param pRootOfTree
      * @return
      */
     public Common.TreeNode Convert(Common.TreeNode pRootOfTree) {
-        if (pRootOfTree == null){
+        if (pRootOfTree == null) {
             return null;
         }
         ArrayList<Common.TreeNode> list = new ArrayList<>();
-        mid(pRootOfTree,list);
+        mid(pRootOfTree, list);
         Common.TreeNode head = list.get(0);
         Common.TreeNode pre = head;
         head.left = null;
-        for (int i=1;i<list.size();i++){
+        for (int i = 1; i < list.size(); i++) {
             pre.right = list.get(i);
             list.get(i).left = pre;
             pre.right = pre;
@@ -39,13 +40,49 @@ public class Solution26 {
     }
 
 
-    public void mid(Common.TreeNode root, ArrayList<Common.TreeNode> tmpList){
-        if (root == null){
+    public void mid(Common.TreeNode root, ArrayList<Common.TreeNode> tmpList) {
+        if (root == null) {
             return;
         }
         mid(root.left, tmpList);
         tmpList.add(root);
         mid(root.right, tmpList);
+    }
+
+    /**
+     * 先中序排序 就是升序的list,最后转为list
+     *
+     *
+     *   1 2 3 4 5 6 7
+     *   <-- 1 <--> 2 <--> 3 <--> 4 <--> 5 <--> 6 <--> 7
+     *       pre
+     *       head
+     *
+     *       pre.right = list.get(i);
+     *       list.get(i).left = pre
+     *       //推动下一个节点
+     *       pre.right = pre
+     *
+     *
+     *
+     * @param pRootOfTree
+     * @return
+     */
+    public Common.TreeNode Convert1(Common.TreeNode pRootOfTree) {
+        if (pRootOfTree == null) {
+            return null;
+        }
+        ArrayList<Common.TreeNode> list = new ArrayList<>();
+        mid(pRootOfTree, list);//中序排序
+        Common.TreeNode head = list.get(0);
+        Common.TreeNode pre = head;
+        head.left = null;
+        for (int i = 1; i < list.size(); i++) {
+            pre.right = list.get(i);
+            list.get(i).left = pre;
+            pre = pre.right;
+        }
+        return head;
     }
 
 }

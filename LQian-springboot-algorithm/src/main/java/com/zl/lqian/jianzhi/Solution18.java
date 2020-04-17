@@ -25,4 +25,19 @@ public class Solution18 {
         Mirror(root.right);
     }
 
+
+    /**
+     * 求二叉树的镜像
+     * @param root
+     */
+    public void change(Common.TreeNode root){
+        if (root == null)return;
+        Common.TreeNode temp = root.left;
+        root.left = root.right;
+        root.right = root.left;
+        temp = null;
+        Mirror(root.left);
+        Mirror(root.right);
+    }
+
 }

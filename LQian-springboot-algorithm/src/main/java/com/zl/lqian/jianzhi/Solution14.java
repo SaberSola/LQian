@@ -35,4 +35,27 @@ public class Solution14 {
     }
 
 
+    /**
+     * 找到倒数第K个节点
+     * @param head
+     * @param k
+     * @return
+     */
+    public Common.ListNode FindKthToTail2(Common.ListNode head, int k) {
+
+        Common.ListNode  fast = head;
+        Common.ListNode  slow = head;
+        for (int i = 0;i< k; i++){
+            if (fast == null){
+                return null;
+            }
+            fast = fast.next;
+        }
+        while (fast != null){
+            fast = fast.next;
+            slow = slow.next;
+        }
+        return slow;
+    }
+
 }

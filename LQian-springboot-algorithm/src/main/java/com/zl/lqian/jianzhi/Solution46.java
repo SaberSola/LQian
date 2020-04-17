@@ -41,4 +41,44 @@ public class Solution46 {
         }
         return list.get(0);
     }
+
+    /**
+     * n个人
+     * 每次移除一个
+     * 采用链表
+     * 主要就是求每次移除在list的下标
+     *         1 2 3 4
+     *        12      5
+     *        11      6
+     *        10 9 8 7
+     *       m = 3; n = 12;
+     *       第一次移除 3
+     *      1  2  4  5   下标 = 2
+     *    12         6
+     *    11 10 9  8 7
+     *    第二次移除 6     下标 = 4
+     *
+     *             remove = (remove + (m-1)) % list.size
+     *
+     *
+     *
+     * @param n
+     * @param m
+     * @return
+     */
+    public int LastRemaining_Solution3(int n, int m) {
+        if (n <= 0 || m <= 0) return -1;
+        LinkedList<Integer> list = new LinkedList<>();
+        for (int i = 0; i < n; i++) {
+            list.add(i);
+        }
+        int remove = 0;
+        while (list.size() != 1){
+            remove = (remove + m-1)%list.size();
+            list.remove(remove);
+        }
+
+        return list.get(0);
+    }
+
 }

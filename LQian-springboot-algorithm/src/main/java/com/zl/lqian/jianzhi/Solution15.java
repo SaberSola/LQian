@@ -68,6 +68,28 @@ public class Solution15 {
     }
 
 
+    /**
+     * 反转链表           1 ----> 2 -----> 3 ----->4
+     *                  1 <---- 2 ------>3 -------5;
+     *
+     *                  //需要保存下的前一个节点
+     * @param head
+     * @return
+     */
+    public Common.ListNode ReverseList2(Common.ListNode head) {
+        //记录当前指针的前一个节点
+        Common.ListNode pre = null;
+        Common.ListNode p = null;//当前节点的下一个节点
+
+        while (head !=null){
+            p = head.next;
+            head.next= pre; //next只想他的前一个指针
+            pre = head;
+            head = p;
+        }
+        return pre;
+    }
+
 }
 
 

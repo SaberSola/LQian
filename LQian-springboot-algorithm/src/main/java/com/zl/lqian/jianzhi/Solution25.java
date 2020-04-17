@@ -39,4 +39,20 @@ public class Solution25 {
         return newNode;
 
     }
+
+    public CloneCLinkedList.RandomListNode Clone1(CloneCLinkedList.RandomListNode oldNode) {
+        if (oldNode == null){
+            return null;
+        }
+        if (map.containsKey(oldNode)){
+            return map.get(oldNode);
+        }
+        CloneCLinkedList.RandomListNode newNode = new CloneCLinkedList.RandomListNode(oldNode.label);
+        map.put(oldNode,newNode);
+        newNode.next = Clone1(oldNode.next);//先克隆正常节点
+        newNode.random = Clone(oldNode.random); //在克隆random节点
+        return newNode;
+    }
+
+
 }

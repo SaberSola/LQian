@@ -63,6 +63,30 @@ public class Solution50 {
 
     }
 
+
+    public static boolean duplicate3(int numbers[],int length,int [] duplication) {
+
+        if (numbers == null || numbers.length < 1){
+            duplication[0] = -1;
+            return false;
+        }
+        boolean flag = false;
+        int[] room = new int[length];
+        Arrays.fill(room,0);
+        for (int i =0; i <numbers.length; i++){
+            int number = numbers[i];
+            if (room[number] == 0){
+                room[number] = 1;
+            }else {
+                flag = true;
+                duplication[0] = number;
+                return flag;
+            }
+        }
+        return flag;
+
+    }
+
     public static void main(String[] args) {
         int[] n = {2,4,3,1,4};
         int[] duplication = new int[5];

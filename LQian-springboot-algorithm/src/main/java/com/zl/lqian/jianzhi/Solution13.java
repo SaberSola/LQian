@@ -49,4 +49,13 @@ public class Solution13 {
     }
 
 
+    public void reOrderArray2(int array[]){
+        for (int i = array.length -1; i > 0; i++){
+            for (int j=0; j <= i-1; j ++){
+                if (array[j] % 2 == 0 && array[j + 1] % 2 == 1) {
+                    swap(array, j, j + 1);
+                }
+            }
+        }
+    }
 }

@@ -1,6 +1,7 @@
 package com.zl.lqian.jianzhi;
 
-import com.zl.lqian.cs.algs4.Stack;
+
+import java.util.Stack;
 
 /**
  * @Author zl
@@ -43,5 +44,26 @@ public class Solution21 {
         }
         return s.isEmpty();
     }
+
+    /**
+     * pushA = 1 2 3  4 5
+     * popA  = 5 4 3 2 1
+     * @param pushA
+     * @param popA
+     * @return
+     */
+    public boolean IsPopOrder1(int [] pushA,int [] popA) {
+        int len = pushA.length;
+        Stack<Integer> s = new Stack();
+        for(int i=0, j=0;  i < len; i++){
+            s.push(pushA[i]); //入栈
+            while (j < len && s.peek() == popA[j]){
+                s.pop();
+                j= j +1;
+            }
+        }
+        return s.isEmpty();
+    }
+
 
 }

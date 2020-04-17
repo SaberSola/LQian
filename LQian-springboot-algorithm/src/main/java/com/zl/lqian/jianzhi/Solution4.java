@@ -59,7 +59,7 @@ public class Solution4 {
         Common.TreeNode root=new Common.TreeNode(pre[startPre]);
 
         for(int i=startIn;i<=endIn;i++)
-            if(in[i]==pre[startPre]){ // i= 3
+            if(in[i]==pre[startPre]){ // i= 2
                 /**
                  *    {1,2,4,5,3,6,7};   1是根节点 4，2，5为左子树
                  *
@@ -108,22 +108,7 @@ public class Solution4 {
             return new Common.TreeNode(rootVal);
         }
 
-        //我们先找到root所在的位置，确定好前序和中序中左子树和右子树序列的范围
-        Common.TreeNode root = new Common.TreeNode(rootVal);
-        int rootIndex = 0;
-        for(int i=0;i<in.length;i++){
-            if(rootVal == in[i]){
-                rootIndex = i;
-                break;
-            }
-        }
-
-        //递归，假设root的左右子树都已经构建完毕，那么只要将左右子树安到root左右即可
-        //这里注意Arrays.copyOfRange(int[],start,end)是[)的区间
-        root.left = reConstructBinaryTree(Arrays.copyOfRange(pre,1,rootIndex+1),Arrays.copyOfRange(in,0,rootIndex));
-        root.right = reConstructBinaryTree(Arrays.copyOfRange(pre,rootIndex+1,pre.length),Arrays.copyOfRange(in,rootIndex+1,in.length));
-
-        return root;
+        return reConstructBinaryTree(pre,0,pre.length-1,in,0,in.length-1);
     }
 
     /**
@@ -139,6 +124,30 @@ public class Solution4 {
      * 正如上面所说，只需要将确定的左右子树安到root上即可。递归要注意出口，假设最后只有一个元素了，那么就要返回。
      */
 
+    private static Common.TreeNode reConstructBinaryTree2(int [] pre, int startPre, int endPre, int [] in, int startIn, int endIn) {
+        System.out.println(startPre + " " +startIn+ " " +endIn);
+        if(startPre>endPre||startIn>endIn)
+            return null;
+        Common.TreeNode root=new Common.TreeNode(pre[startPre]);
 
+        for(int i=startIn;i<=endIn;i++)
+            if(in[i]==pre[startPre]){ // i= 2
+                /**
+                 *    {1,2,4,5,3,6,7};   1是根节点 4，2，5为左子树
+                 *
+                 *    {4,2,5,1,6,3,7};   1是根据点 4，2，5为左子树
+                 *
+                 *    构建左子树
+                 *    i=3 startPre = 0 endPre= 6 startIn =  0，endIn = 6
+                 *        startPre = 1 endPre = 3 StartIn = 0，endIn = 2;
+                 *    构建右子树 越界就是为节点
+                 *
+                 */
+                root.left=reConstructBinaryTree2(pre,startPre+1,startPre+i-startIn,in,startIn,i-1);
+                root.right=reConstructBinaryTree2(pre,i-startIn+startPre+1,endPre,in,i+1,endIn);
+                break;
+            }
+        return root;
+    }
 
 }

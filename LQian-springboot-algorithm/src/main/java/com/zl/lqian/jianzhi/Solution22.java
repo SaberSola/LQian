@@ -41,4 +41,33 @@ public class Solution22 {
         }
         return list;
     }
-}
+
+    /**
+     * 使用队列
+     * 每次根节点出队列就把 左右节点放入队列
+     * @param root
+     * @return
+     */
+    public ArrayList<Integer> PrintFromTopToBottom2(Common.TreeNode root) {
+        ArrayList<Integer> list = new ArrayList<>();
+        Queue<Common.TreeNode> queue = new LinkedList();
+        queue.offer(root);//放入根节点
+        while (!queue.isEmpty()){
+            Common.TreeNode node = queue.poll();
+            list.add(node.val);
+            if (node.left != null){
+                queue.offer(node.left);
+            }
+            if (node.right != null){
+                queue.offer(node.right);
+            }
+        }
+        return list;
+
+    }
+
+
+
+
+
+    }

@@ -42,4 +42,40 @@ public class Solution16 {
         return dump.next;
     }
 
+
+    /**
+     * 单调递增的俩个俩表合成一个链表
+     * @param list1
+     * @param list2
+     * @return
+     */
+    public Common.ListNode Merge2(Common.ListNode list1, Common.ListNode list2) {
+        //虚拟节点
+        Common.ListNode dump = new Common.ListNode(0);
+        Common.ListNode cur = dump;
+        while (list1 != null && list2 != null){
+            if (list1.val > list2.val){
+                cur.next = list2;
+                cur = cur.next;
+                list2 = list2.next;
+            }else {
+                cur.next = list1;
+                cur = cur.next;
+                list1 = list2.next;
+            }
+        }
+        if (list1 != null) cur.next = list1;
+        if (list2 != null) cur.next = list2;
+        return dump.next;
+
+    }
+
+
+
+
+
+
+
+
+
 }
