@@ -51,4 +51,37 @@ public class Solution56 {
         }
         return result;
     }
+
+
+    /**
+     * 之字形打开二叉树
+     * 主要是控制节点的翻转
+     * @param pRoot
+     * @return
+     */
+    public ArrayList<ArrayList<Integer>> Print2(Common.TreeNode pRoot) {
+        LinkedList<Common.TreeNode> q = new LinkedList<>();
+        ArrayList<ArrayList<Integer>> result = new ArrayList<>();
+        boolean rev = true;
+        q.add(pRoot);
+        while (q.isEmpty()){
+            ArrayList<Integer> list = new ArrayList<>();int size = q.size();
+            for (int i = 0; i < size; i++){ //遍历列表
+                Common.TreeNode node = q.poll();//取第一个节点
+                if (node == null){
+                    continue;
+                }
+                if (rev){
+                    list.add(node.val);
+                }else {//反转插在前边
+                    list.add(0, node.val);
+                }
+                q.offer(node.left);
+                q.offer(node.right);
+            }
+            if(list.size()!=0){result.add(list);}
+            rev=!rev;
+        }
+        return result;
+    }
 }

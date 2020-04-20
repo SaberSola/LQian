@@ -23,6 +23,7 @@ public class RedisLimitBootStrap implements ApplicationContextAware {
     }
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+
         SpringBeanUtils.getInstance().setCfgContext((ConfigurableApplicationContext) applicationContext);
         start(RedisLimiteConfigList.getRedisLimiteConfigs());
     }

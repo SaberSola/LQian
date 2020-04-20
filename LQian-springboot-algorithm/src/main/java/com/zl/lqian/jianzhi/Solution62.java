@@ -13,23 +13,24 @@ public class Solution62 {
      * ，每段绳子的长度记为k[0],k[1],...,k[m]。请问k[0]xk[1]x...xk[m]可能的最大乘积是多少？
      * 例如，当绳子的长度是8时，我们把它剪成长度分别为2、3、3的三段，此时得到的最大乘积是18。
      * f(n) = f(n-i)*f(i)
-     *
+     * <p>
      * 最优的可以分为 f(a)*f(b)
-     *             f(a)又可以继续拆
+     * f(a)又可以继续拆
      * f(n) = f(n-i)*f(i)动态规划
-     *
+     * <p>
      * target为绳子长度
+     *
      * @param target
      * @return
      */
     public static int cutRope(int target) {
-        if (target < 2){//绳子长度为1不能切分
+        if (target < 2) {//绳子长度为1不能切分
             return 0;
         }
-        if (target == 2){
+        if (target == 2) {
             return 1;
         }
-        if (target == 3){
+        if (target == 3) {
             return 2;
         }
         int[] repos = new int[target + 1];
@@ -38,16 +39,44 @@ public class Solution62 {
         repos[2] = 2;
         repos[3] = 3;
 
-        for (int i = 4; i <=target; i++){
-            for (int j=1; j<= i/2; j++){
-                int val = repos[j] * repos[i-j];
-                max = max > val?max:val;
+        for (int i = 4; i <= target; i++) {
+            for (int j = 1; j <= i / 2; j++) {
+                int val = repos[j] * repos[i - j];
+                max = max > val ? max : val;
                 repos[i] = max;
             }
         }
 
         max = repos[target];
         return max;
+    }
+
+
+    public int cutRope1(int target) {
+        if (target < 2) {//绳子长度为1不能切分
+            return 0;
+        }
+        if (target == 2) {
+            return 1;
+        }
+        if (target == 3) {
+            return 2;
+        }
+        int dp[] = new int[target + 1];
+        int max = -1; //最大值
+        dp[1] = 1;
+        dp[2] = 2;
+        dp[3] = 3;
+        for (int i = 4 ; i <= target; i ++){
+            for (int j = 1; j<= i/2; j ++){
+                int val = dp[j] * dp[i - j];
+                max = max > val ? max : val;
+                dp[i] = max;
+            }
+        }
+        max = dp[target];
+        return max;
+
     }
 
     public static void main(String[] args) {
