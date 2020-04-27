@@ -1,5 +1,8 @@
 package com.zl.lqian.jianzhi;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+
 /**
  * @Author zl
  * @Date 2020-04-19
@@ -49,5 +52,14 @@ public class Solution64 {
         solve(x+1,y,threshold,rows,cols,roots);
         solve(x,y+1,threshold,rows,cols,roots);
     }
+
+    public static void main(String[] args) {
+
+        ScheduledThreadPoolExecutor scheduledThreadPoolExecutor = new ScheduledThreadPoolExecutor(1);
+        //scheduledThreadPoolExecutor.scheduleAtFixedRate()
+        System.out.println("【臻有钱】尊敬的用户，您的账户中有70000.0元即将过期。到哈啰出行-我的-借钱，尽快提现，戳这 h.c3x.me/0nfKDN 退订回T".length());
+    }
+
+
 
 }
