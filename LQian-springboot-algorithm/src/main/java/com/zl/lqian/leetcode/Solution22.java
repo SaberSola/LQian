@@ -125,4 +125,13 @@ public class Solution22 {
         }
     }
 
+
+    public static void main(String[] args) {
+        Integer a  = Integer.MAX_VALUE;
+        Integer b  =a +1;
+        System.out.println(a);
+        System.out.println(b);
+        System.out.println(a < b);
+    }
+
 }
