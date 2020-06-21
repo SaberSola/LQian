@@ -38,7 +38,7 @@ public class Solution72 {
 
 
     /**
-     * 二十六禁止
+     * 二十六进制
      * @param s
      * @return
      */
