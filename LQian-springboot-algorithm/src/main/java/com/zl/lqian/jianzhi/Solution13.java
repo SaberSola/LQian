@@ -16,7 +16,7 @@ public class Solution13 {
      * 并保证奇数和奇数，偶数和偶数之间的相对位置不变。
      * <p>
      * 1 3 2 4 5 6
-     *
+     * <p>
      * 1 3 2 4 5 6    第一次
      * 1 3 2 5 4 6    第二次
      * 1 3 5 2 4 6    第三次
@@ -25,11 +25,11 @@ public class Solution13 {
      */
 
     public static void main(String[] args) {
-        int a [] = {1,2,3,4,5,6};
+        int a[] = {1, 2, 3, 4, 5, 6};
         reOrderArray(a);
     }
 
-    public static   void reOrderArray(int[] array) {
+    public static void reOrderArray(int[] array) {
         for (int i = array.length - 1; i > 0; i--) {
             for (int j = 0; j + 1 <= i; j++) {
                 if (array[j] % 2 == 0 && array[j + 1] % 2 == 1) {
@@ -49,9 +49,9 @@ public class Solution13 {
     }
 
 
-    public void reOrderArray2(int array[]){
-        for (int i = array.length -1; i > 0; i++){
-            for (int j=0; j <= i-1; j ++){
+    public void reOrderArray2(int array[]) {
+        for (int i = array.length - 1; i > 0; i++) {
+            for (int j = 0; j <= i - 1; j++) {
                 if (array[j] % 2 == 0 && array[j + 1] % 2 == 1) {
                     swap(array, j, j + 1);
                 }

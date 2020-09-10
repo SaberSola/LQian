@@ -8,12 +8,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @SpringBootApplication(scanBasePackages = {"com.lqian.repetition.*"},
 	exclude = {DataSourceAutoConfiguration.class })
 @MapperScan("com.lqian.repetition.mapper")
+@ComponentScan(basePackages = "com.lqian.*")
 @ServletComponentScan
 public class App {
 

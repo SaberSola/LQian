@@ -15,7 +15,7 @@ public class Solution48 {
      * 两个二进制的相加结果是用一个异或门实现的；
      * 两个二进制的进位结果是用一个与门来实现的。并且左移一位
      */
-    public int Add(int num1,int num2) {
+    public int add(int num1,int num2) {
         int result, ans;
         do {
             result = num1 ^ num2;       // 每一位相加
@@ -24,5 +24,9 @@ public class Solution48 {
             num2 = ans;
         } while (ans != 0);
         return result;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(0&0);
     }
 }
