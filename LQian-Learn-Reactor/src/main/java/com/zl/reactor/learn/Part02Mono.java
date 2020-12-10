@@ -42,4 +42,9 @@ public class Part02Mono {
     public Mono<String> errorMono() {
         return Mono.error(new IllegalStateException());
     }
+
+    public static void main(String[] args) {
+        Mono mono = Mono.just("test");
+        mono.doOnSuccess()
+    }
 }

@@ -124,4 +124,12 @@ public class HttpUtils {
         }
         return result;
     }
+
+    public static void main(String[] args) throws Exception{
+        String url = "http://localhost:9195/http/order/findById?id=123";
+        while (true){
+            Thread.sleep(10L);
+            System.out.println(sendGet(url));
+        }
+    }
 }
