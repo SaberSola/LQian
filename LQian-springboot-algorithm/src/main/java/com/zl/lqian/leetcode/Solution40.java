@@ -1,6 +1,7 @@
 package com.zl.lqian.leetcode;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -69,6 +70,18 @@ public class Solution40 {
 
     }
 
+
+    public ListNode reserve(ListNode node){
+        ListNode pre = null;
+        ListNode cur = node;
+        while (cur != null){
+            ListNode next  = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = next;
+        }
+        return pre;
+    }
 
 }
 

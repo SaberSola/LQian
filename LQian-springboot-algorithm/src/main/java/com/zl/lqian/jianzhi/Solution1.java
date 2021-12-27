@@ -144,6 +144,4 @@ public class Solution1 {
 
         return false;
     }
-
-
 }

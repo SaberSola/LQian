@@ -15,14 +15,16 @@ public class ContextDemo {
 
 
     @Test
-    public void testContextOne(){
+    public void testContextOne() {
 
         String key = "message";
-        Mono<String> r = Mono.just("Hello")
+        Mono.just("Hello")
                 .flatMap(s -> Mono.subscriberContext() // We flatMap on the source element, materializing the Context with Mono.subscriberContext().
                         .map(ctx -> s + " " + ctx.get(key))) // We then use map to extract the data associated to "message" and concatenate that with the original word.
                 // The chain of operators ends with a call to subscriberContext(Function) that puts "World" into the Context under the key "message".
-                .subscriberContext(ctx -> ctx.put(key, "World"));
+                .subscribe(s -> {
+                    System.out.println(s);
+                });
 
         StepVerifier.create(r)
                 .expectNext("Hello World") // The resulting Mono<String> indeed emits "Hello World".
@@ -31,22 +33,20 @@ public class ContextDemo {
 
 
     /**
-     *  context api
-     *
-     *  Context 是 不可变的（immutable）
-     *
-     *  put(Object key, Object value): 存储一个key-value 返回一个新的 Context 对象。
-     *                                 你也可以用 putAll(Context) 方法将两个 context 合并为一个新的 context。
-     *
-     *  hasKey(Object key): 方法检查一个 key 是否已经存在。
-     *
-     *  getOrDefault(Object key, T defaultValue):  方法取回 key 对应的值（类型转换为 T）， 或在找不到这个 key 的情况下返回一个默认值。
-     *
-     *  getOrEmpty(Object key): 来得到一个 Optional<T> （context 会尝试将值转换为 T）。
-     *
-     *  delete(Object key): 删除 key 关联的值，并返回一个新的 Context。
-     *
-     *
+     * context api
+     * <p>
+     * Context 是 不可变的（immutable）
+     * <p>
+     * put(Object key, Object value): 存储一个key-value 返回一个新的 Context 对象。
+     * 你也可以用 putAll(Context) 方法将两个 context 合并为一个新的 context。
+     * <p>
+     * hasKey(Object key): 方法检查一个 key 是否已经存在。
+     * <p>
+     * getOrDefault(Object key, T defaultValue):  方法取回 key 对应的值（类型转换为 T）， 或在找不到这个 key 的情况下返回一个默认值。
+     * <p>
+     * getOrEmpty(Object key): 来得到一个 Optional<T> （context 会尝试将值转换为 T）。
+     * <p>
+     * delete(Object key): 删除 key 关联的值，并返回一个新的 Context。
      */
 
     @Test
@@ -67,14 +67,14 @@ public class ContextDemo {
     }
 
     @Test
-    public void  testDemo(){
+    public void testDemo() {
 
         String key = "message";
         Mono<String> r = Mono.just("Hello")
-                .flatMap( s -> Mono.subscriberContext()              //2: 对源调用 flatMap 用 Mono.subscriberContext() 方法拿到 Context。
-                        .map( ctx -> s + " " + ctx.get(key)))        //3: 然后使用 map 读取关联到 "message" 的值，然后与原来的值连接。
+                .flatMap(s -> Mono.subscriberContext()              //2: 对源调用 flatMap 用 Mono.subscriberContext() 方法拿到 Context。
+                        .map(ctx -> s + " " + ctx.get(key)))        //3: 然后使用 map 读取关联到 "message" 的值，然后与原来的值连接。
                 .subscriberContext(ctx -> ctx.put(key, "World"));    //1: 操作链以调用 subscriberContext(Function) 结尾，将 "World" 作为 "message" 这个 key 的 值添加到 Context 中。
-               //上图的执行顺序 subscription  是从下游像上的
+        //上图的执行顺序 subscription  是从下游像上的
         StepVerifier.create(r)
                 .expectNext("Hello World")
                 .verifyComplete();
@@ -159,7 +159,6 @@ public class ContextDemo {
                 .expectNext("Hello World Reactor")
                 .verifyComplete();
     }
-
 
 
     @Test

@@ -21,7 +21,7 @@ public class Solution5 {
         while (stack1.size() != 0) {
             stack2.push(stack1.pop());
         }
-        return stack1.pop();
+        return stack2.pop();
     }
 
 

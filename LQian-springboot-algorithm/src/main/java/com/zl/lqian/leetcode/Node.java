@@ -16,4 +16,5 @@ public class Node {
         this.next = null;
         this.random = null;
     }
+
 }

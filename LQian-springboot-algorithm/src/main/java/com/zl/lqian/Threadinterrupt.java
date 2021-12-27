@@ -14,9 +14,15 @@ public class Threadinterrupt {
             thread.isAlive();
         }
         thread.interrupt();*/
-        ExecutorService executorService = new ThreadPoolExecutor(8,8,10000L, TimeUnit.MILLISECONDS,new ArrayBlockingQueue<Runnable>(199));
+     /*   ExecutorService executorService = new ThreadPoolExecutor(8,8,10000L, TimeUnit.MILLISECONDS,new ArrayBlockingQueue<Runnable>(199));
         Future<Integer> future = executorService.submit(new TestClass());
-        future.get();
+        future.get();*/
+        TestClass testClass = new TestClass();
+        Thread thread = new Thread(testClass);
+        thread.start();
+
+        Thread.sleep(10000);
+        thread.interrupt();
     }
     static class InnerClass implements Runnable {
 
@@ -38,16 +44,22 @@ public class Threadinterrupt {
         }
     }
 
-    static class TestClass implements Callable<Integer> {
+    static class TestClass implements Runnable {
         @Override
-        public Integer call() {
-            try {
-                Thread.sleep(500000L);
-            } catch (InterruptedException e) {
-                e.printStackTrace(); //线程处于中断时会跑遗产 但是在异常中一定要再次中断 否则会有死循环
-
+        public void run() {
+            System.err.println("start work");
+            while (!Thread.currentThread().isInterrupted()) {
+                System.out.println(Thread.currentThread().isInterrupted());
+                System.out.println("doing work");
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    System.out.println("sleep 响应中断");
+                    e.printStackTrace(); //线程处于中断时会跑遗产 但是在异常中一定要再次中断 否则会有死循环
+                    Thread.currentThread().interrupt();
+                }
             }
-           return 0;
+            System.err.println("done work");
         }
     }
 

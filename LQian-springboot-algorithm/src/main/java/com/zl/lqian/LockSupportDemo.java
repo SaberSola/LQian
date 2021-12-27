@@ -1,10 +1,12 @@
 package com.zl.lqian;
 
+import sun.awt.windows.ThemeReader;
+
 import java.util.concurrent.locks.LockSupport;
 
 public class LockSupportDemo {
 
-    public static void main(String[] args){
+    public static void main(String[] args) throws Exception{
         Thread thread = new Thread(() -> {
             long start = System.currentTimeMillis();
             while ((System.currentTimeMillis() - start) <= 1000);//空转1s
@@ -14,6 +16,7 @@ public class LockSupportDemo {
                     + Thread.currentThread().isInterrupted());
         },"kira");
         thread.start();
+        Thread.sleep(100000);
         thread.interrupt();//中断线程
     }
 }

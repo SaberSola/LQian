@@ -31,7 +31,7 @@ public class Solution18 {
      * @param nums
      * @return
      */
-    public int removeDuplicates(int[] nums) {
+    public static int removeDuplicates(int[] nums) {
         if(nums == null || nums.length == 0) return 0;
         int l = 0;
         int r = 1;
@@ -59,8 +59,8 @@ public class Solution18 {
     }
 
     public static void main(String[] args) {
-        int a[] = new int[]{0,0,0,1,1,2,2,3,0,0};
-        removeElement(a,0);
+        int a[] = new int[]{0,0,1,1,1,2,2,3,3,4};
+        System.out.println(removeDuplicates(a));
     }
 
 

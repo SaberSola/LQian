@@ -36,6 +36,7 @@
         <module>LQian-springboot-Hystrix</module>
         <module>LQian-learn-RxJava</module>
         <module>LQian-change-param</module>
+        <module>LQian-grpc-dynamic</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>

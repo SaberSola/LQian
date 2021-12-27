@@ -70,9 +70,10 @@ public class Solution15 {
 
     /**
      * 反转链表           1 ----> 2 -----> 3 ----->4
-     *                  1 <---- 2 ------>3 -------5;
+     * 1 <---- 2 ------>3 -------5;
+     * <p>
+     * //需要保存下的前一个节点
      *
-     *                  //需要保存下的前一个节点
      * @param head
      * @return
      */
@@ -81,15 +82,42 @@ public class Solution15 {
         Common.ListNode pre = null;
         Common.ListNode p = null;//当前节点的下一个节点
 
-        while (head !=null){
+        while (head != null) {
             p = head.next;
-            head.next= pre; //next只想他的前一个指针
+            head.next = pre; //next只想他的前一个指针
             pre = head;
             head = p;
         }
         return pre;
     }
 
+    /**
+     * @param head
+     * @return
+     */
+    public Common.ListNode ReverseList3(Common.ListNode head) {
+
+        /**
+         *      1 -----> 2 ----> 3 ----> 4
+         *
+         *
+         *      1 <----- 2 ----> 3 -----> 4
+         *
+         */
+        //当前指针的前驱节点
+        Common.ListNode pre = null;
+        //当前指针的下一个节点
+        Common.ListNode curNext = null;
+        while (head != null) {
+            //head是当前节点
+            curNext = head.next;
+            //开始swap交换操作
+            head.next = pre;
+            pre = head;
+            head = curNext;
+        }
+        return pre;
+    }
 }
 
 

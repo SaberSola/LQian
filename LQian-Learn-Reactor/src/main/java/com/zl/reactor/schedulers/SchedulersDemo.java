@@ -1,6 +1,8 @@
 package com.zl.reactor.schedulers;
 
 import org.junit.Test;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
 public class SchedulersDemo {
@@ -25,6 +27,5 @@ public class SchedulersDemo {
 
         //固定大小的线程池  所创建线程池的大小与 CPU 个数等同。
         Schedulers.parallel();
-
     }
 }

@@ -44,7 +44,8 @@ public class Part02Mono {
     }
 
     public static void main(String[] args) {
-        Mono mono = Mono.just("test");
-        mono.doOnSuccess()
+        Mono.just("test").subscribe(s -> {
+            System.out.println(s);
+        });
     }
 }

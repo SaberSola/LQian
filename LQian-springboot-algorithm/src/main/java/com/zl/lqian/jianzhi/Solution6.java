@@ -36,7 +36,7 @@ public class Solution6 {
      * @param array
      * @return
      */
-    public int minNumberInRotateArray2(int[] array) {
+    public static int minNumberInRotateArray2(int[] array) {
         int i = 0, j = array.length - 1;
         while (i < j) {
             if (array[i] < array[j]) {
@@ -47,13 +47,15 @@ public class Solution6 {
                 i = mid +1;
             }else if (array[mid] < array[j]){
                 j = mid;
-            }else i++;
+            }else {i++;}
 
         }
         return array[i];
     }
 
-
-
+    public static void main(String[] args) {
+        int [] a = new int[]{3,4,5,1,2};
+        System.out.println(minNumberInRotateArray2(a));
+    }
 
 }

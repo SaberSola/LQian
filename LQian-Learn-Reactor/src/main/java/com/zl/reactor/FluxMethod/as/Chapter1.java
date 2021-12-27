@@ -7,8 +7,8 @@ public class Chapter1 {
 
 
     /**
-     *
      * 视同from 从一个序列读出来赋给当前序列
+     *
      * @param args
      */
     public static void main(String[] args) {
@@ -16,6 +16,16 @@ public class Chapter1 {
                 .as(Mono::from)
                 .log();
 
-        mono.subscribe(System.out::println);
+        Mono<Object> test = Mono.defer(() -> {
+            Mono a = Mono.just("zhangle");
+            throw new RuntimeException("test");
+        }).onErrorResume(throwable -> {
+            return Mono.just(throwable.getLocalizedMessage());
+        });
+
+        Mono test2 = Mono.create(monoSink -> {
+            System.out.println(123);
+        });
+        test2.subscribe();
     }
 }
